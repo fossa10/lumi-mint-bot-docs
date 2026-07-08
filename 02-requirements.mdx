@@ -10,21 +10,17 @@ description: 'What you need before running Lumi Mint Bot'
     Windows 10 or later. Download the `.exe` build.
   </Card>
   <Card title="macOS" icon="apple">
-    Recent macOS. Download the Mac build.
+    Coming in a future release.
   </Card>
 </CardGroup>
 
 <Warning>
-  Linux is **not** currently supported for automatic updates. The bot will still run on Linux if a build is provided, but you'll need to update it manually rather than relying on the built-in auto-updater.
+  Linux is not supported.
 </Warning>
-
-## A live internet connection, always
-
-Lumi Mint Bot checks your license key against a license server every time it starts, and again every 50 minutes while it's running. **If it can't reach that server, the bot will not run at all** — there's no offline mode. Make sure you're not on a network that blocks outbound HTTPS requests (some corporate/school networks do).
 
 ## A license key
 
-You need an active license key before the bot will show its menu. See [Getting a License Key](/getting-a-license-key).
+You need an active license key before the bot will show its menu. See [Getting a License Key](/03-getting-license-key).
 
 <Warning>
   A license key locks to the **first computer** it's used on. If you plan to move to a new PC, reinstall your OS, or use a virtual machine, read the machine-lock note on that page first.
@@ -35,14 +31,28 @@ You need an active license key before the bot will show its menu. See [Getting a
 You'll need at least one Ethereum-compatible wallet with:
 
 - Enough of the chain's native token (ETH, etc.) to cover the mint price, if any
-- Enough extra to cover **gas fees** — the network fee for submitting a transaction. Always keep more than you think you need; gas prices spike during popular drops.
+- Enough extra to cover **gas fees**, the network fee for submitting a transaction. Always keep more than you think you need; gas prices spike during popular drops.
 
-See [Setting Up Your Wallets](/wallet-setup) for exactly how to give the bot access to your wallets.
+See [Setting Up Your Wallets](/05-wallet-setup) for exactly how to give the bot access to your wallets.
 
-## RPC endpoints (usually no setup needed)
+## RPC endpoints
 
-The bot talks to the blockchain through "RPC" servers. It ships with working public RPC URLs for Ethereum and Base already filled in, so most users don't need to do anything here. If you plan to mint on a different chain, or want faster/more reliable RPCs, see the `rpcs` section in [Configuring the Bot](/configuration).
+The bot talks to the blockchain through "RPC" servers. It ships with working public RPC URLs for Ethereum and Base already filled in, so most users don't need to do anything here.
+
+If you want faster or more reliable RPCs, especially for competitive mints, see [RPC Setup](/14-rpc-setup) for how to get a paid RPC endpoint.
+
+## Proxy (highly recommended for 3-5+ wallets)
+
+A proxy can help avoid rate limits when checking eligibility across many wallets. See [Proxy Setup](/15-proxy-setup).
+
+## VPS (optional)
+
+For lower latency and more reliable uptime than a home connection, some users run the bot on a VPS (virtual private server) instead of their own computer. See [VPS Setup](/16-vps-setup).
 
 ## Basic comfort editing a text file
 
-You don't need to write any code, but you will need to open one settings file in a plain text editor (Notepad, TextEdit, VS Code, etc.) and fill in some values. Every field is explained in [Configuring the Bot](/configuration).
+You don't need to write any code, but you will need to open one settings file in a plain text editor and fill in some values. Every field is explained in [Configuring the Bot](/06-configuration).
+
+<Tip>
+  Basic editors like Notepad (Windows) or TextEdit (Mac) work, but [Notepad++](https://notepad-plus-plus.org/) (Windows) or [Sublime Text](https://www.sublimetext.com/) (Windows/Mac) are highly recommended. They highlight YAML syntax, which makes it much easier to spot a misplaced quote or indentation mistake in your settings file.
+</Tip>

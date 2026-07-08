@@ -7,13 +7,16 @@ Lumi Mint Bot requires a license key to run. Keys are issued through our Discord
 
 <Steps>
   <Step title="Join the Discord server">
-    Join [DISCORD_INVITE_LINK] if you haven't already.
+    Join [discord.gg/pulseanchor](https://discord.gg/pulseanchor) if you haven't already.
   </Step>
-  <Step title="Become a subscriber or trial member">
-    Generating a key requires an active subscriber or trial role. If you don't have one yet, see [PRICING_OR_SIGNUP_LINK] for how to get access.
+  <Step title="Get the Crew or Partner role">
+    Generating a key requires the **Crew** or **Partner** role in the server.
+
+    - **Crew** represents consistent, active participation and contribution in the community. To keep the role meaningful, inactive Crew members are periodically removed. If you're removed, you can reapply through the application process.
+    - **Partner** is reserved for members from our partner projects.
   </Step>
   <Step title="Run the slash command">
-    In the [#CHANNEL_NAME] channel, type:
+    In the `🤖│bot-commands` channel, type:
 
     ```
     /generate-license-key
@@ -26,22 +29,22 @@ Lumi Mint Bot requires a license key to run. Keys are issued through our Discord
     ```
   </Step>
   <Step title="Copy it into your config file">
-    Paste the key into the `license_key` field of your settings file. See [Configuring the Bot](/configuration#authentication).
+    Paste the key into the `license_key` field of your settings file. See [Configuring the Bot](/06-configuration#authentication).
   </Step>
 </Steps>
 
-<Frame caption="Screenshot: the ephemeral Discord embed showing a freshly generated license key (blur/redact the key itself before publishing)">
-  <img src="/images/placeholder-license-key.png" />
+<Frame caption="The ephemeral Discord embed showing a freshly generated license key">
+  <img src="/images/license-key.png" />
 </Frame>
 
 ## Important things to know
 
 <Warning title="One key = one computer">
-  The first time your key is checked, it locks to that computer. If you try to use the same key on a second computer, it will be rejected. If you need to move to a new PC, re-run `/generate-license-key` in Discord — this generates the same key again but resets which machine it's locked to.
+  The first time your key is checked, it locks to that computer. If you try to use the same key on a second computer, it will be rejected. If you need to move to a new PC, re-run `/generate-license-key` in Discord. This generates the same key again but resets which machine it's locked to.
 </Warning>
 
 <Note title="Keys expire after 30 days">
   Running `/generate-license-key` again before or after expiry refreshes it for another 30 days and unlocks it from whatever machine it was previously tied to.
 </Note>
 
-If your key is rejected and you don't know why, the bot will print the exact reason it received from the license server — see [Troubleshooting](/troubleshooting#license-errors).
+If your key is rejected and you don't know why, the bot will print the exact reason it received from the license server. See [Troubleshooting](/12-troubleshooting#license-errors).

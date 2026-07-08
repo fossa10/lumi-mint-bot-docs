@@ -5,59 +5,63 @@ description: 'Download, run, and configure the bot for the first time'
 
 <Steps>
   <Step title="Download">
-    Download the build for your operating system from [DOWNLOAD_LINK]:
+    Head to `🛠️│nft-tools` channel in Discord and see the pinned message.
 
-    - Windows: `lumi_mint_bot.exe`
-    - macOS: the Mac build
+    - Windows: available now
+    - macOS: future release
 
     <Tip>
       Put it in its own folder. The bot creates a settings file and log files right next to it, so an empty dedicated folder keeps things tidy.
     </Tip>
   </Step>
   <Step title="Run it once">
-    Double-click the executable (on Mac, you may need to right-click → Open the first time to bypass Gatekeeper).
+    Double-click the executable.
 
     You'll see something like:
 
     ```
     === Lumi Mint Bot v1.7.4 ===
 
-    No config file found — a template has been created at
+    No config file found, a template has been created at
     '.../lumi_mint_bot_config.yaml'. Fill in your settings and re-run.
     ```
 
-    **This is expected — not an error.** The bot exits on purpose so you can fill in the new settings file.
+    **This is expected, not an error.** The bot exits on purpose so you can fill in the new settings file.
   </Step>
   <Step title="Open the new settings file">
     A file named `lumi_mint_bot_config.yaml` now sits next to the executable. Open it in any plain text editor.
 
-    Head to [Configuring the Bot](/configuration) for a field-by-field walkthrough, and [Setting Up Your Wallets](/wallet-setup) for how to add your wallet(s).
+    Head to [Configuring the Bot](/06-configuration) for a field-by-field walkthrough, and [Setting Up Your Wallets](/05-wallet-setup) for how to add your wallet(s).
 
     At minimum, before the bot is usable, you need to fill in:
-    - `authentication.license_key` — see [Getting a License Key](/getting-a-license-key)
-    - `wallets` — see [Setting Up Your Wallets](/wallet-setup)
-    - `mint.slug`, `mint.chain`, `mint.quantity_per_wallet`, `mint.mint_price_eth` — the drop you're targeting
+    - `authentication.license_key`, see [Getting a License Key](/03-getting-license-key)
+    - `wallets`, see [Setting Up Your Wallets](/05-wallet-setup)
+    - `mint.slug`, `mint.chain`, `mint.quantity_per_wallet`, `mint.mint_price_eth`: the drop you're targeting
   </Step>
   <Step title="Run it again">
     Save the settings file and double-click the executable again. If everything is filled in correctly, you'll land on the main menu.
 
-    <Frame caption="Screenshot: the main menu right after a successful launch">
-      <img src="/images/placeholder-main-menu.png" />
+    <Frame caption="The main menu right after a successful launch">
+      <img src="/images/main-menu.png" />
     </Frame>
   </Step>
 </Steps>
 
 ## Reloading settings without restarting
 
-If you edit the settings file while the bot is already running, you don't need to close and reopen it — choose **↺ Reload Config** from the main menu and your changes take effect immediately.
+If you edit the settings file while the bot is already running, you don't need to close and reopen it. Choose **↺ Reload Config** from the main menu and your changes take effect immediately.
 
 ## Staying up to date
 
-The bot checks its own version against the license server on every launch. If a newer version is required, it **updates itself automatically** — you'll see a message and the bot will restart on its own. You don't need to manually download new versions.
+The bot checks its own version against the license server on every launch. If a newer version is required, it **updates itself automatically**. You'll see a message and the bot will restart on its own. You don't need to manually download new versions.
 
 <Warning>
-  Don't rename, move, or delete the executable while the bot is running — the auto-update process needs to replace that exact file.
+  Don't rename, move, or delete the executable while the bot is running. The auto-update process needs to replace that exact file.
 </Warning>
+
+<Note>
+  If the auto-update fails for any reason, download the file manually from `🛠️│nft-tools` (see [Step 1 above](#download)).
+</Note>
 
 <Note>
   Every run creates a timestamped log file (e.g. `mint_bot_20260708_140213.log`) in the same folder. These are safe to delete any time, and are the first thing to send if you ask for support help.
