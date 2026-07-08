@@ -1,0 +1,47 @@
+---
+title: 'Getting a License Key'
+description: 'How to generate and activate your Lumi Mint Bot license'
+---
+
+Lumi Mint Bot requires a license key to run. Keys are issued through our Discord server.
+
+<Steps>
+  <Step title="Join the Discord server">
+    Join [DISCORD_INVITE_LINK] if you haven't already.
+  </Step>
+  <Step title="Become a subscriber or trial member">
+    Generating a key requires an active subscriber or trial role. If you don't have one yet, see [PRICING_OR_SIGNUP_LINK] for how to get access.
+  </Step>
+  <Step title="Run the slash command">
+    In the [#CHANNEL_NAME] channel, type:
+
+    ```
+    /generate-license-key
+    ```
+
+    The bot will reply privately (only you can see it) with your key. It looks like this:
+
+    ```
+    A1B2-C3D4-E5F6-G7H8-I9J0-K1L2-M3N4-O5P6-Q7R8-S9T0
+    ```
+  </Step>
+  <Step title="Copy it into your config file">
+    Paste the key into the `license_key` field of your settings file. See [Configuring the Bot](/configuration#authentication).
+  </Step>
+</Steps>
+
+<Frame caption="Screenshot: the ephemeral Discord embed showing a freshly generated license key (blur/redact the key itself before publishing)">
+  <img src="/images/placeholder-license-key.png" />
+</Frame>
+
+## Important things to know
+
+<Warning title="One key = one computer">
+  The first time your key is checked, it locks to that computer. If you try to use the same key on a second computer, it will be rejected. If you need to move to a new PC, re-run `/generate-license-key` in Discord — this generates the same key again but resets which machine it's locked to.
+</Warning>
+
+<Note title="Keys expire after 30 days">
+  Running `/generate-license-key` again before or after expiry refreshes it for another 30 days and unlocks it from whatever machine it was previously tied to.
+</Note>
+
+If your key is rejected and you don't know why, the bot will print the exact reason it received from the license server — see [Troubleshooting](/troubleshooting#license-errors).

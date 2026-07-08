@@ -1,0 +1,61 @@
+---
+title: 'Glossary'
+description: 'Plain-English definitions of terms used throughout these docs'
+---
+
+<AccordionGroup>
+  <Accordion title="Allowlist (AL)">
+    A pre-approved list of wallet addresses allowed to mint before the general public, usually at a lower price or guaranteed spot. Sometimes called a "whitelist."
+  </Accordion>
+  <Accordion title="Base fee">
+    The minimum fee per unit of computation ("gas") the network requires right now. It rises and falls automatically with network demand — it's not something any single user sets.
+  </Accordion>
+  <Accordion title="Calldata">
+    The raw data sent along with a blockchain transaction that tells a smart contract which function to run and with what arguments. In [Custom Contract mode](/custom-contract), you either let the bot build this for you or provide it directly as `hex`.
+  </Accordion>
+  <Accordion title="Chain">
+    A specific blockchain network — Ethereum, Base, Polygon, etc. Your wallets and RPCs are all organized per chain.
+  </Accordion>
+  <Accordion title="Dry run">
+    A simulation that shows what the bot *would* do without actually sending anything on-chain. See [Mint Modes Explained](/mint-modes#d--dry-run).
+  </Accordion>
+  <Accordion title="Gas / gas fee">
+    The fee paid to the network to process a transaction, separate from the price of the NFT itself. Paid in the chain's native token (ETH, etc.).
+  </Accordion>
+  <Accordion title="Gwei">
+    A unit of the native token used to price gas — one gwei is one-billionth of one ETH (or MATIC, etc., depending on chain).
+  </Accordion>
+  <Accordion title="Keystore file">
+    An encrypted JSON file storing a wallet's private key, protected by a password. One of two supported ways to give the bot wallet access — see [Setting Up Your Wallets](/wallet-setup#option-b-use-an-encrypted-keystore-file).
+  </Accordion>
+  <Accordion title="License key">
+    Your personal key that unlocks the bot, tied to your Discord account and locked to one computer. See [Getting a License Key](/getting-a-license-key).
+  </Accordion>
+  <Accordion title="Machine ID">
+    A fingerprint derived from your computer's hardware, used to enforce "one license = one machine." You never need to look this up yourself.
+  </Accordion>
+  <Accordion title="Merkle proof / Merkle tree">
+    A cryptographic way to prove a wallet is on an allowlist without publishing the entire list on-chain. Transient's presale eligibility works this way; the bot checks it automatically.
+  </Accordion>
+  <Accordion title="Private key">
+    A secret string that gives full control over a wallet. Anyone with it can move everything in that wallet — never share it. See the security warning in [Setting Up Your Wallets](/wallet-setup).
+  </Accordion>
+  <Accordion title="Protocol fee">
+    An extra fee (separate from the mint price) that some platforms — notably Transient — charge per NFT. See [Minting Guide](/minting-guide#platform-differences).
+  </Accordion>
+  <Accordion title="RPC">
+    "Remote Procedure Call" endpoint — a server the bot talks to in order to read blockchain data and submit transactions. See `rpcs` in [Configuring the Bot](/configuration#rpc-endpoints).
+  </Accordion>
+  <Accordion title="Slug">
+    The short identifier for a collection, usually the last part of its URL. Example: for `opensea.io/collection/cool-cats`, the slug is `cool-cats`.
+  </Accordion>
+  <Accordion title="Snipe mode">
+    Setting `gas.gas_limit` to `0`, which makes the bot repeatedly retry a transaction until the contract accepts it — useful when a mint's exact open time is uncertain. See [Configuring the Bot](/configuration#gas-settings).
+  </Accordion>
+  <Accordion title="SIWE (Sign-In With Ethereum)">
+    A free, gasless signature used to prove wallet ownership when logging into a platform (OpenSea, Blever). It costs nothing and is not a transaction.
+  </Accordion>
+  <Accordion title="Stage / Phase">
+    A distinct part of a sale — for example "Allowlist" then "Public Sale" — each with its own price, timing, and eligibility rules.
+  </Accordion>
+</AccordionGroup>

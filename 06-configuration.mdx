@@ -1,0 +1,206 @@
+---
+title: 'Configuring the Bot'
+description: 'Every field in lumi_mint_bot_config.yaml, explained'
+---
+
+All settings live in `lumi_mint_bot_config.yaml`, created automatically next to the executable on first run (see [Installation & First Run](/installation)). Open it in any plain text editor.
+
+<Tip>
+  Edited the file while the bot is running? You don't need to restart — choose **↺ Reload Config** from the main menu.
+</Tip>
+
+<Note title="Config auto-updates itself">
+  Every time you launch the bot, it checks your file against the latest template. If a future bot version adds a new setting, it gets appended automatically under a `# ── Auto-migrated: new parameters ──` comment, with a sensible default — your existing values are never touched or removed.
+</Note>
+
+## Authentication
+
+<ParamField path="authentication.license_key" type="string" required>
+  Your Lumi license key. See [Getting a License Key](/getting-a-license-key). The bot won't start without a valid one.
+</ParamField>
+
+## API keys
+
+<ParamField path="opensea_api_key" type="string" required>
+  Your OpenSea API key, used for fetching drop and stage information. Required for OpenSea mode.
+</ParamField>
+
+<ParamField path="explorer_api_keys.ethereum" type="string">
+  A free Etherscan API key ([get one here](https://etherscan.io/myapikey)). Only used by **Custom Contract → Discover contract** mode, to fetch a verified contract's real ABI (with readable parameter names). If left blank, the bot falls back to guessing function signatures via 4byte.directory — it still works, just with less readable output.
+</ParamField>
+
+<ParamField path="discord_webhook_url" type="string">
+  A Discord webhook URL. If set, the bot posts a summary embed after each mint attempt. Leave as `""` to disable.
+</ParamField>
+
+## Wallets
+
+<ParamField path="wallets" type="list of strings" required>
+  Wallets available to mint from. See [Setting Up Your Wallets](/wallet-setup) for the full format (`label,0xprivatekey` or a keystore label).
+</ParamField>
+
+## Mint settings
+
+These apply to **OpenSea**, **Blever**, and **Transient** modes.
+
+<ParamField path="mint.slug" type="string" required>
+  The collection's slug — the part of the drop's URL that identifies it, e.g. for `opensea.io/collection/my-drop` the slug is `my-drop`.
+</ParamField>
+
+<ParamField path="mint.chain" type="string" required default="ethereum">
+  Which chain to mint on. Must exactly match one of the chain names you've listed under `rpcs` (e.g. `ethereum`, `base`, `polygon`, `blast`, `abstract`).
+</ParamField>
+
+<ParamField path="mint.quantity_per_wallet" type="integer" required default="1">
+  How many NFTs each selected wallet should mint.
+</ParamField>
+
+<ParamField path="mint.mint_price_eth" type="float" required default="0.0">
+  <strong>This is a price ceiling, not the price you'll pay.</strong> The bot compares this to the drop's real on-chain price and refuses to mint if the real price is higher — a safety guard against paying more than expected. Set to the actual mint price (or higher, to be safe), or `0.0` for free mints.
+</ParamField>
+
+## Custom contract settings
+
+Only used by [Custom Contract mode](/custom-contract). See that page for the "Discover contract" flow, which can fill most of this in for you interactively instead.
+
+<ParamField path="custom_contract.contract_address" type="string" required>
+  The target contract's address.
+</ParamField>
+
+<ParamField path="custom_contract.function" type="string">
+  A function signature, e.g. `mint(uint256)`. If set, calldata is built from this plus `parameters`, and `hex` is ignored.
+</ParamField>
+
+<ParamField path="custom_contract.parameters" type="string">
+  Semicolon-separated argument values matching `function`'s types. Example for `mint(uint256)`: `3`. Example for `mint(address,uint256)`: `0xABCD...;3`. Required only if `function` is set.
+</ParamField>
+
+<ParamField path="custom_contract.hex" type="string">
+  Full raw calldata (including the 4-byte function selector), e.g. `0xa0712d68...`. Only used when `function` is left empty.
+</ParamField>
+
+<ParamField path="custom_contract.value_eth" type="float" default="0.0">
+  ETH to send with the transaction. `0.0` for free mints.
+</ParamField>
+
+<ParamField path="custom_contract.chain" type="string" default="ethereum">
+  Which chain to mint on. Must match a key under `rpcs`.
+</ParamField>
+
+<ParamField path="custom_contract.start_time" type="integer (Unix timestamp)" default="0">
+  When to count down to for Scheduled and Gas Monitor modes. This is a raw Unix timestamp (seconds since 1970), not a normal date — use a converter like [unixtimestamp.com](https://www.unixtimestamp.com/) to convert a real date/time into this format. `0` or blank means "mint immediately, no countdown."
+</ParamField>
+
+## Gas settings
+
+<ParamField path="gas.mode" type="'rapid' or 'manual'" default="rapid">
+  **rapid** — the bot reads the network's current base fee live and applies `multiplier` on top. Good default; adapts automatically as network conditions change.
+
+  **manual** — the bot always uses the fixed `base_gwei` / `priority_gwei` values below, regardless of live network conditions.
+</ParamField>
+
+<ParamField path="gas.multiplier" type="float" default="1.2">
+  Rapid mode only. Multiplies the live base fee. `1.0` = pay exactly the current base fee, `1.5` = pay 50% above it (safer during volatile gas spikes, but more expensive).
+</ParamField>
+
+<ParamField path="gas.base_gwei" type="float" default="1.0">
+  Manual mode: the maximum fee per gas unit, in gwei.
+
+  <Warning>
+    Regardless of `gas.mode`, this same value is also what **Gas Monitor mode (mode C)** waits for the network base fee to drop below. If you're using `rapid` mode and never touch this field, Gas Monitor mode will still use the default `1.0` gwei threshold — which may never happen on Ethereum mainnet, making the bot appear to hang while it polls every 30 seconds. If you plan to use Gas Monitor mode, set this deliberately.
+  </Warning>
+</ParamField>
+
+<ParamField path="gas.priority_gwei" type="float" default="1.0">
+  Manual mode only: the "tip" paid to the block producer, in gwei.
+</ParamField>
+
+<ParamField path="gas.gas_limit" type="integer" default="0">
+  The computation budget for the transaction.
+
+  Set a fixed number (e.g. `160000`) to skip estimation and use exactly that.
+
+  Set to `0` for **"snipe mode"**: the bot repeatedly simulates the transaction until the contract actually accepts it. This is intentional and useful when you don't know the exact second a mint opens — but expect rapid repeated log output, and be aware it uses real RPC calls (can hit rate limits on free public endpoints).
+</ParamField>
+
+<ParamField path="gas.flashbots_protect" type="boolean" default="false">
+  Routes the transaction privately via Flashbots Protect. If it would revert, you pay no gas. **Ethereum mainnet only — has no effect on any other chain.** Does not apply to MEV Tip mode, which uses its own builder list instead.
+</ParamField>
+
+## Per-wallet overrides
+
+<ParamField path="wallet_overrides.<wallet_label>.base_gwei" type="float">
+  Override `gas.base_gwei` for one specific wallet (by its label).
+</ParamField>
+<ParamField path="wallet_overrides.<wallet_label>.priority_gwei" type="float">
+  Override `gas.priority_gwei` for one specific wallet.
+</ParamField>
+<ParamField path="wallet_overrides.<wallet_label>.quantity_per_wallet" type="integer">
+  Override `mint.quantity_per_wallet` for one specific wallet.
+</ParamField>
+
+Any wallet not listed here just uses the global settings above. Example:
+
+```yaml
+wallet_overrides:
+  my_wallet:
+    base_gwei: 5.0
+    priority_gwei: 2.0
+    quantity_per_wallet: 3
+```
+
+## Bundle / MEV settings
+
+Used by [MEV Tip mode](/mint-modes#e-mev-tip).
+
+<ParamField path="bundle.tip_eth" type="float" required default="0.001">
+  ETH tip paid to the block builder per bundle submission. Size this against what competitor bots are likely tipping for the same drop — the default is intentionally conservative and may lose every block during a competitive mint.
+</ParamField>
+
+<ParamField path="bundle.tip_wallet" type="string">
+  Optionally, a dedicated wallet (label, or `label,0xprivatekey`) to pay the tip from instead of one of your mint wallets. Leave `""` to use the first eligible mint wallet.
+</ParamField>
+
+<ParamField path="bundle.gas_limit" type="integer" default="0">
+  Manual gas limit for the bundle's mint transactions. `0` = auto-estimate.
+</ParamField>
+
+<ParamField path="bundle.max_blocks" type="integer" required default="5">
+  How many blocks in a row to keep resubmitting the bundle if it doesn't land.
+</ParamField>
+
+## RPC endpoints
+
+<ParamField path="rpcs.<chain_name>" type="list of URLs" required>
+  RPC endpoints for each chain you mint on. The bot ships with working public endpoints for `ethereum` and `base` already filled in:
+
+  ```yaml
+  rpcs:
+    ethereum:
+      - "https://ethereum-rpc.publicnode.com"
+      - "https://eth.drpc.org"
+    base:
+      - "https://base-rpc.publicnode.com"
+      - "https://base.drpc.org"
+  ```
+
+  To add a new chain, add a new key with the same name OpenSea uses for it (`polygon`, `blast`, `abstract`, etc.) and at least one RPC URL.
+
+  <Tip>
+    Listing multiple URLs per chain isn't just a backup — wallets are assigned RPCs round-robin, so multiple URLs spread request load across endpoints and reduce the chance of hitting a rate limit during a busy mint.
+  </Tip>
+</ParamField>
+
+## Proxy
+
+<ParamField path="proxy.enabled" type="boolean" default="false">
+  Turn proxy usage on or off.
+</ParamField>
+<ParamField path="proxy.host" type="string" />
+<ParamField path="proxy.port" type="integer" default="8080" />
+<ParamField path="proxy.username" type="string" />
+<ParamField path="proxy.password" type="string" />
+
+<Warning>
+  Proxy settings only apply to OpenSea sign-in and eligibility checks. **The actual mint transaction is always sent directly, unproxied**, for lower latency. Don't rely on this setting for full traffic anonymization.
+</Warning>

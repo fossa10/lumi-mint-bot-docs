@@ -1,0 +1,92 @@
+---
+title: 'Wallet Tools'
+description: 'Allowlist checking, balances, and moving tokens/NFTs between your wallets'
+---
+
+**Wallet Tools** (from the [main menu](/main-menu)) is a separate menu of utilities — nothing here mints an NFT. It's for managing the wallets you already have.
+
+```
+Wallet Tools:
+  WL Checker
+  Check Token Balance
+  Disperse Tokens
+  Consolidate Tokens
+  Disperse NFT
+  Consolidate NFT
+  ⌂  Main Menu
+```
+
+## WL Checker
+
+Checks which of your wallets are allowlisted for a drop, without minting anything.
+
+<Steps>
+  <Step title="Pick a platform">
+    OpenSea, Blever, or Transient.
+  </Step>
+  <Step title="Enter the slug">
+    Leave blank to use the slug already in your config.
+  </Step>
+  <Step title="Read the summary">
+    ```
+    === Eligibility Summary ===
+    Stage: Allowlist
+      main    — 0x1a2b...9f8e — 2 remaining
+      backup  — 0x3c4d...7a6b — not eligible
+    ```
+  </Step>
+</Steps>
+
+## Check Token Balance
+
+Checks how much of a token your wallets hold, on any configured chain.
+
+1. Pick a chain (from your configured `rpcs`).
+2. Enter an ERC-20 contract address, or leave blank to check the native token (ETH, etc.) instead.
+3. Select which wallets to check.
+
+You get a table of balances per wallet plus a total.
+
+## Disperse Tokens
+
+Sends a set amount of a token from **one** wallet out to **multiple** destination wallets. Useful for funding several mint wallets from one main wallet before a drop.
+
+1. Pick a chain and a token (blank = native token).
+2. Pick one **source** wallet.
+3. Pick one or more **destination** wallets.
+4. Enter the amount to send to each.
+5. For native tokens, choose whether to force-send the full amount to every destination, or only "top up" wallets that currently hold less than the target amount (skipping ones that already have enough).
+6. Confirm, and watch the per-transfer ✅/❌ results.
+
+## Consolidate Tokens
+
+The reverse of Disperse: sweeps a token from **multiple** wallets into **one** destination. Useful for collecting funds back after a mint.
+
+1. Pick a chain and a token (blank = native token).
+2. Pick one or more **source** wallets.
+3. Pick one **destination** wallet.
+4. Enter an amount per wallet, or leave blank to sweep everything (minus a small reserve left behind to cover that wallet's own gas fee).
+
+## Disperse NFT
+
+Spreads NFTs you own in one wallet out across several of your other wallets.
+
+1. Pick a chain and enter the contract address or OpenSea slug.
+2. Pick the source wallet and destination wallet(s).
+3. The bot lists the NFTs that wallet owns from that collection.
+4. Choose an assignment mode:
+   - **Automatic (round-robin)** — pick which NFTs to move, and the bot spreads them evenly across your chosen destinations.
+   - **Manual (choose per wallet)** — you assign specific token IDs to specific destination wallets yourself.
+
+## Consolidate NFT
+
+The reverse: gathers NFTs from several of your wallets into one destination wallet.
+
+1. Pick a chain and enter the contract address or slug.
+2. Pick one or more source wallets and one destination wallet.
+3. The bot shows every NFT your selected wallets own from that collection (grouped by wallet).
+4. Check the ones you want to move — they're transferred from whichever wallet currently owns each one.
+
+<Frame caption="Screenshot: the NFT selection checklist during Consolidate NFT, showing token IDs grouped by wallet">
+  <img src="/images/placeholder-consolidate-nft.png" />
+</Frame>

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "Lumi Mint Bot",
+  "theme": "maple",
+  "colors": {
+    "primary": "#16A34A",
+    "light": "#4ADE80",
+    "dark": "#15803D"
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guide",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "01-welcome",
+              "02-requirements",
+              "03-getting-license-key",
+              "04-installation",
+              "05-wallet-setup",
+              "06-configuration"
+            ]
+          },
+          {
+            "group": "Using the Bot",
+            "pages": [
+              "07-main-menu",
+              "08-minting-guide",
+              "09-mint-modes",
+              "10-custom-contract",
+              "11-wallet-tools"
+            ]
+          },
+          {
+            "group": "Help",
+            "pages": [
+              "12-troubleshooting",
+              "13-glossary"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

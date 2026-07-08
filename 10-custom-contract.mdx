@@ -1,0 +1,84 @@
+---
+title: 'Custom Contract Mode'
+description: 'Mint from any contract, even ones not on a supported platform'
+---
+
+Custom Contract mode lets you mint from **any** NFT contract — no OpenSea/Blever/Transient listing required, no login, no eligibility check. You're responsible for making sure the contract and function you target are correct.
+
+<Warning>
+  Because there's no platform to validate anything, mistakes here go straight to the blockchain. Always try **Dry run** first, and double-check the contract address before minting for real.
+</Warning>
+
+From the [main menu](/main-menu), choose **Custom Contract**. After selecting your wallets, you'll be asked:
+
+```
+Calldata source:
+  Config values     (function/hex already set)
+  Discover contract (fetch ABI, select function)
+```
+
+## Option A: Config values
+
+Use this if you already know exactly what you want to call. Fill in the `custom_contract` section of your settings file ahead of time — see the full field reference in [Configuring the Bot](/configuration#custom-contract-settings):
+
+```yaml
+custom_contract:
+  contract_address: "0xYourContractAddress"
+  function: "mint(uint256)"
+  parameters: "3"
+  hex: ""
+  value_eth: 0.05
+  chain: "ethereum"
+  start_time: 0
+```
+
+- If `function` is filled in, the bot builds calldata from `function` + `parameters` and ignores `hex`.
+- If `function` is left empty, the bot uses `hex` directly instead — for cases where you already have raw calldata copied from elsewhere.
+
+## Option B: Discover contract
+
+Use this if you don't know the exact mint function, or want the bot to help you find it.
+
+<Steps>
+  <Step title="Enter the contract address">
+    Leave blank to use the one already in your config, or type a new one.
+  </Step>
+  <Step title="Let the bot inspect the contract">
+    The bot fetches the contract's available functions — using its verified source code if you've set an `explorer_api_keys` value (see [Configuring the Bot](/configuration#api-keys)), or a best-effort guess from bytecode if not. It shows any mint price, total supply, and per-wallet caps it can detect.
+  </Step>
+  <Step title="Select a function">
+    Pick the mint function from the numbered list shown. The bot also shows how many tokens each of your loaded wallets has already minted from this contract, if it can detect a per-wallet cap.
+  </Step>
+  <Step title="Choose how to fill in parameters">
+    ```
+    Parameters:
+      Same for all wallets (prompt once, parallel submit)
+      Per wallet (prompt each wallet, sequential submit)
+    ```
+
+    **Same for all wallets** — you enter each parameter's value once. You can type `{self}` or `{wallet}` in place of an address parameter and the bot automatically substitutes each wallet's own address. All wallets then mint in parallel.
+
+    **Per wallet** — you're prompted for parameter values separately for each wallet (with a yes/no to include or skip that wallet), and wallets mint one at a time rather than in parallel. Use this if different wallets need genuinely different parameter values (e.g. different Merkle proofs).
+  </Step>
+</Steps>
+
+<Frame caption="Screenshot: the Discover contract flow after selecting a function, showing detected price/supply and the parameter prompt">
+  <img src="/images/placeholder-discover-contract.png" />
+</Frame>
+
+## Mode menu
+
+Same as other platforms — Scheduled, Manual, Gas Monitor, Dry run — see [Mint Modes Explained](/mint-modes). MEV Tip is also available here (Ethereum only, and only when using "Same for all wallets" parameter mode), but before submitting it runs an automatic compatibility check:
+
+```
+[PASS] EOA gate: not found
+[PASS] Per-block cap: not detected
+[WARN] Allowlist / Merkle proof required
+[PASS] Pause gate: not detected
+
+VERDICT: PROCEED WITH CAUTION
+```
+
+- **PASS** items are unlikely to block your mint.
+- **WARN** items are worth reading — the bot will ask you to confirm before continuing.
+- If the verdict is a hard **FAIL**, the bot won't let you submit the MEV bundle at all, since it would very likely fail on-chain and waste your tip.

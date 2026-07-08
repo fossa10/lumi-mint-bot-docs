@@ -1,0 +1,64 @@
+---
+title: 'Mint Modes Explained'
+description: 'Scheduled, Manual, Gas Monitor, Dry Run, and MEV Tip — what each one does'
+---
+
+After picking a stage/phase (or, for Custom Contract, after setting up calldata), you'll see a mode menu like this:
+
+```
+Mode:
+  A — Scheduled   (auto at stage open)
+  B — Manual      (mint now)
+  C — Gas Monitor (mint when base fee < base_gwei)
+  D — Dry run     (simulate only)
+  E — MEV Tip     (coinbase tip, multi-builder)
+  ⌂ — Main Menu
+```
+
+<Note>
+  Not every mode is available on every platform. [Transient](/minting-guide#platform-differences) only offers A, B, and D. MEV Tip only appears on Ethereum.
+</Note>
+
+<Tip>
+  New to the bot? Run **Dry run** first. It touches nothing on-chain and confirms your config, wallets, and stage selection are all correct before you risk a real transaction.
+</Tip>
+
+## A — Scheduled
+
+**Use when:** you know roughly when the drop opens and want the bot to handle the exact timing for you.
+
+The bot counts down to the stage's start time, showing a live `Opens in MM:SS...` timer. A few seconds before open, it "prewarms" — preparing gas settings and re-checking the live per-wallet limit in the background. The instant the stage opens, it fetches mint data for every wallet and submits as fast as possible. This is the mode most people want for a normal drop.
+
+## B — Manual
+
+**Use when:** the drop is already open (or you want to try minting right now, with no waiting).
+
+Submits immediately for every eligible wallet, in parallel. If `gas.gas_limit` is set to `0`, it first repeatedly tests the transaction until the contract accepts it (see the `gas.gas_limit` note in [Configuring the Bot](/configuration#gas-settings)) — useful if you're not sure the mint has actually started yet.
+
+## C — Gas Monitor
+
+**Use when:** the drop is open (or about to be) and you want to wait for cheaper gas before minting, rather than paying whatever the network charges the instant it opens.
+
+The bot waits for the stage to open, then checks the network's base fee every 30 seconds and mints as soon as it drops below your configured `gas.base_gwei` threshold.
+
+<Warning>
+  This mode always compares against `gas.base_gwei`, even if `gas.mode` is set to `rapid`. If you leave `base_gwei` at its default (`1.0`), the bot may wait indefinitely on a chain like Ethereum mainnet where base fee rarely drops that low. Set `gas.base_gwei` to a realistic threshold before using this mode — see [Configuring the Bot](/configuration#gas-settings).
+</Warning>
+
+## D — Dry run
+
+**Use when:** you want to double-check everything is configured correctly with zero risk.
+
+Prints which wallets and RPCs would be used and stops — no transaction is built, signed, or sent. Nothing costs gas or ETH.
+
+## E — MEV Tip
+
+**Use for:** highly competitive mints where you're racing other bots for the same block, and you're comfortable paying extra to improve your odds.
+
+<Warning title="Advanced mode — costs real ETH">
+  This mode pays a tip (`bundle.tip_eth`) directly to block builders to try to get your mint transaction prioritized. If your tip is too low compared to competing bots, your bundle simply won't land — with no error beyond "Bundle did not land within max_blocks." Size your tip deliberately; see `bundle.tip_eth` in [Configuring the Bot](/configuration#bundle--mev-settings).
+</Warning>
+
+The bot builds one transaction per wallet plus a small tip payment, bundles them together, and sends the bundle to several block builders at once, retrying for up to `bundle.max_blocks` blocks. It also detects if a builder tries to "cherry-pick" — landing your tip payment while excluding your actual mints — and reports it.
+
+Only available when minting on Ethereum mainnet.

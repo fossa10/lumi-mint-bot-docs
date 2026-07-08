@@ -1,0 +1,80 @@
+---
+title: 'Setting Up Your Wallets'
+description: 'Two ways to give the bot access to your wallets'
+---
+
+The bot needs your wallet's **private key** to sign and submit mint transactions on your behalf. There are two supported ways to provide it — pick whichever you're more comfortable with.
+
+<Warning title="Your private key = full control of your wallet">
+  Anyone who gets your private key can move everything out of that wallet. Never share your settings file or your keystore files with anyone, never paste your private key into Discord/chat, and never commit these files to a public GitHub repo. Consider using a fresh "mint wallet" that only holds what you need for minting, rather than your main wallet.
+</Warning>
+
+## Option A: Paste the private key directly (simplest)
+
+In the `wallets` section of your settings file, add one line per wallet in the format:
+
+```yaml
+wallets:
+  - "main,0xabc123...yourprivatekeyhere"
+  - "backup,0xdef456...anotherprivatekeyhere"
+```
+
+- The part before the comma (`main`, `backup`) is a **label** — pick anything memorable, it's only shown to you in menus.
+- The part after the comma is the wallet's private key, with or without the `0x` prefix.
+- You can leave off the label entirely (just the key) — the bot will label it with the first few characters of the wallet address instead.
+
+<Tip>
+  To find a wallet's private key in MetaMask: Account details → Show private key. Never do this on a shared or public screen.
+</Tip>
+
+## Option B: Use an encrypted keystore file
+
+If you'd rather not store a raw private key in a plain text file, you can use a standard Ethereum keystore JSON file (the kind exported by most wallets, encrypted with a password).
+
+<Steps>
+  <Step title="Create a wallets folder">
+    Make a folder named `wallets` next to the bot executable.
+  </Step>
+  <Step title="Add your keystore file">
+    Name it `keystore_<label>.json`, for example `keystore_main.json`. `<label>` becomes that wallet's name in the bot's menus.
+  </Step>
+  <Step title="Reference it in the settings file">
+    ```yaml
+    wallets:
+      - "main"
+    ```
+    Just the label, with no comma and no key — the bot knows to look for `wallets/keystore_main.json`.
+
+    <Tip>
+      If you leave the whole `wallets:` list empty, the bot will automatically load every `keystore_*.json` file it finds in that folder.
+    </Tip>
+  </Step>
+  <Step title="Enter the password when prompted">
+    The first time the bot needs a keystore wallet in a session, it asks for the password once (input is hidden as you type). It's remembered in memory for up to 4 hours so you won't be asked again for every action.
+  </Step>
+</Steps>
+
+## Mixing both methods
+
+You can list raw-private-key wallets and keystore-label wallets together in the same `wallets:` list — the bot figures out which is which automatically.
+
+## Selecting wallets when minting
+
+Every time you start a mint, the bot shows a checklist of all your configured wallets:
+
+```
+Select wallets to use:
+  ◉ main — 0x1a2b...9f8e
+  ◯ backup — 0x3c4d...7a6b
+```
+
+- **Space** toggles a wallet
+- **a** selects/deselects all
+- **i** inverts the current selection
+- **Enter** confirms
+
+<Frame caption="Screenshot: the wallet selection checklist">
+  <img src="/images/placeholder-wallet-select.png" />
+</Frame>
+
+You must select at least one wallet to continue.

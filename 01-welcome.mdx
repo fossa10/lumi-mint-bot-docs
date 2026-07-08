@@ -1,0 +1,45 @@
+---
+title: 'Welcome to Lumi Mint Bot'
+description: 'An automated NFT minting assistant for OpenSea, Blever, Transient, and custom contracts'
+---
+
+Lumi Mint Bot is a desktop tool that helps you mint NFTs the moment a drop opens, across multiple wallets, without you having to sit refreshing a page and clicking "Mint" by hand.
+
+It runs as a simple menu you navigate with your arrow keys and Enter — no coding required.
+
+## What it can do
+
+<CardGroup cols={2}>
+  <Card title="OpenSea drops" icon="rocket">
+    Mint from any OpenSea SeaDrop collection, across multiple wallets and allowlist stages.
+  </Card>
+  <Card title="Blever drops" icon="rocket">
+    Mint from Blever.xyz drops using the same wallet and stage-based workflow.
+  </Card>
+  <Card title="Transient drops" icon="rocket">
+    Mint from Transient.xyz (Transient Labs) drops, including presale allowlist checks.
+  </Card>
+  <Card title="Custom contracts" icon="wand-magic-sparkles">
+    Mint from almost any NFT contract, even ones not listed on a supported platform, by letting the bot discover the mint function for you.
+  </Card>
+</CardGroup>
+
+It also includes a **Wallet Tools** menu for everyday wallet management: checking allowlist eligibility, checking token balances, and moving tokens or NFTs between your own wallets.
+
+## How it works, in one paragraph
+
+You tell the bot which wallets to use and which drop to target by editing one settings file. When you run the bot, you pick a platform, pick which wallets to mint with, pick the sale stage you're eligible for, and then choose a **mode** — for example, "wait for the drop to open and mint automatically" or "just try to mint right now." The bot then handles the technical parts: checking eligibility, building the transaction, paying gas, and submitting it to the blockchain.
+
+<Note>
+  New to some of the vocabulary here — "gas," "gwei," "allowlist," "slug"? Check the [Glossary](/glossary) at any time — every guide links back to it.
+</Note>
+
+## Before you start
+
+You'll need three things ready before the bot is useful to you:
+
+1. A **license key** — see [Getting a License Key](/getting-a-license-key).
+2. One or more **wallets** funded with enough crypto to mint and pay gas — see [Setting Up Your Wallets](/wallet-setup).
+3. A few minutes to fill in the **settings file** — see [Configuring the Bot](/configuration).
+
+Once those are done, head to [Installation & First Run](/installation).
