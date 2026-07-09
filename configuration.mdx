@@ -244,16 +244,23 @@ Used by [MEV Tip mode](/mint-modes#e-mev-tip).
 
 ## Proxy
 
-<ParamField path="proxy.enabled" type="boolean">
-  Turn proxy usage on or off. Defaults to `false`.
-</ParamField>
-<ParamField path="proxy.host" type="string" />
-<ParamField path="proxy.port" type="integer">
-  Defaults to `8080`.
-</ParamField>
-<ParamField path="proxy.username" type="string" />
-<ParamField path="proxy.password" type="string" />
+<ParamField path="proxy" type="list of strings">
+  A list of proxies in `login:password@hostname:port` format. The bot distributes them across wallets in round-robin order. Leave the list empty (or comment all entries out) to disable proxies entirely.
 
-<Warning>
-  Proxy settings only apply to OpenSea sign-in and eligibility checks. **The actual mint transaction is always sent directly, unproxied**, for lower latency. Don't rely on this setting for full traffic anonymization.
-</Warning>
+  ```yaml
+  proxy:
+    - "user1:pass1@proxy.example.com:8080"
+    - "user2:pass2@proxy.example.com:8081"
+  ```
+
+  To disable, comment all entries out:
+
+  ```yaml
+  proxy:
+    # - "login:password@hostname:port"
+  ```
+
+  <Warning>
+    Proxy settings only apply to OpenSea sign-in and eligibility checks. **The actual mint transaction is always sent directly, unproxied**, for lower latency. Don't rely on this setting for full traffic anonymization.
+  </Warning>
+</ParamField>
