@@ -3,8 +3,36 @@ title: 'VPS Setup'
 description: 'Running Lumi Mint Bot on a virtual private server'
 ---
 
+A VPS (virtual private server) is a rented computer that runs 24/7 in a data center. Botters use one instead of their own PC for two reasons:
+
+- **Lower latency.** A VPS sits closer to the RPC and platform servers the bot talks to, so your requests round-trip faster during a competitive mint.
+- **Reliable uptime.** It keeps running even if your home internet drops or your PC restarts, and doesn't tie up your own computer while it's minting.
+
+## Minimum recommended setup
+
+- **OS:** Windows
+- **Plan:** Cloud VPS 30 (or equivalent): 8 CPUs, 24 GB RAM, 200 GB NVMe
+- **Region:** US East
+
 <Note>
-  This page is a placeholder — full content coming soon.
+  Pick a region close to the RPC endpoints and platforms you mint on. US East is a safe default for most Ethereum/OpenSea mints.
 </Note>
 
-Topics to cover here: why a VPS can help (lower latency to RPC/platform servers, uptime independent of your home connection/power), recommended VPS providers and regions, and how to get the bot running on one.
+## Providers
+
+I personally use [Sauce Servers](https://sauceservers.com/). Other options:
+
+- Cheaper: [Contabo](https://contabo.com/)
+- More expensive: [Zesty](https://zestystore.com/)
+
+<Tip>
+  Search Google or ask an AI chatbot for current VPS providers and pricing before committing to one.
+</Tip>
+
+<Warning>
+  Pulse Anchor doesn't endorse or partner with any of these providers. Do your own research before renting one.
+</Warning>
+
+## Getting the bot running on your VPS
+
+Once your VPS is set up, connect to it with Remote Desktop (built into Windows) and set up the bot exactly like you would on your own PC, see [Installation & First Run](/installation). Your license key still locks to that VPS as its own machine, so keep that in mind if you plan to switch servers later.

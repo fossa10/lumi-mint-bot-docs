@@ -3,8 +3,27 @@ title: 'RPC Setup'
 description: 'Getting a paid RPC endpoint for faster, more reliable minting'
 ---
 
-<Note>
-  This page is a placeholder — full content coming soon.
-</Note>
+The free public RPCs in the default config work for most users, but they're shared with everyone else using them. During a busy mint, that can mean slower responses or hitting rate limits right when speed matters most. A paid RPC gives you a dedicated (or less crowded) connection instead.
 
-Topics to cover here: why the free public RPCs in the default config can be slow or rate-limited during a busy mint, recommended paid RPC providers, how to get an API URL from one, and where to paste it into the `rpcs` section of [Configuring the Bot](/configuration#rpc-endpoints).
+## Billing
+
+Most RPC providers bill **pay-as-you-go**: you get charged based on how much usage or traffic you actually send per month, not a flat fee.
+
+## Providers
+
+I personally use both [Alchemy](https://www.alchemy.com/) and [Ankr](https://www.ankr.com/). Other options:
+
+- [dRPC](https://drpc.org/)
+- [QuickNode](https://www.quicknode.com/)
+
+<Tip>
+  Search Google or ask an AI chatbot for current RPC providers and pricing before committing to one.
+</Tip>
+
+<Warning>
+  Pulse Anchor doesn't endorse or partner with any of these providers. Do your own research before buying.
+</Warning>
+
+## Adding your RPC to the config
+
+Once you've created an endpoint with a provider, copy its URL and add it under the matching chain in the `rpcs` section of your settings file, see the field reference in [Configuring the Bot](/configuration#rpc-endpoints).

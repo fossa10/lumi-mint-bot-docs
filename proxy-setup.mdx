@@ -3,8 +3,33 @@ title: 'Proxy Setup'
 description: 'Using a proxy to avoid rate limits during eligibility checks'
 ---
 
+A proxy routes some of the bot's network requests through a different IP address instead of your own. This helps avoid rate limits when checking eligibility across many wallets at once.
+
 <Note>
-  This page is a placeholder — full content coming soon.
+  The proxy only covers OpenSea sign-in and eligibility checks. The actual mint transaction always goes out directly, see the warning in [Configuring the Bot](/configuration#proxy).
 </Note>
 
-Topics to cover here: what the bot's proxy setting is used for (see the warning in [Configuring the Bot](/configuration#proxy) — only OpenSea sign-in and eligibility checks, not the mint transaction itself), recommended proxy providers, and how to fill in the `proxy` section of your config.
+## Minimum recommended setup
+
+**Rotating residential proxies.** These route through real home IP addresses and rotate between them, which is enough for most botters.
+
+For higher performance (and higher cost), **ISP proxies** are faster and more stable, since they don't hop between IPs as much, but they cost more per proxy.
+
+## Providers
+
+I personally use [Data Impulse](https://dataimpulse.com/) Resi Premium. Other options:
+
+- [statproxies.com](https://www.statproxies.com/)
+- [birdproxies.com](https://birdproxies.com/en)
+
+<Tip>
+  Search Google or ask an AI chatbot for current proxy providers and pricing before committing to one.
+</Tip>
+
+<Warning>
+  Pulse Anchor doesn't endorse or partner with any of these providers. Do your own research before buying.
+</Warning>
+
+## Adding your proxy to the config
+
+Once you have proxy credentials, fill in the `proxy` section of your settings file, see the field reference in [Configuring the Bot](/configuration#proxy).
