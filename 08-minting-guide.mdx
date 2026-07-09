@@ -3,44 +3,40 @@ title: 'Minting Guide: OpenSea, Blever & Transient'
 description: 'The shared step-by-step flow for minting from a supported platform'
 ---
 
-OpenSea, Blever, and Transient all follow the same basic flow. This page walks through it once; platform-specific differences are called out where they matter. If you're minting from a contract that isn't on any of these three platforms, see [Custom Contract Mode](/custom-contract) instead.
+OpenSea, Blever, and Transient all follow the same basic flow. This page walks through it once, and platform-specific differences are called out where they matter. If you're minting from a contract that isn't on any of these three platforms, see [Custom Contract Mode](/10-custom-contract) instead.
 
 <Steps>
   <Step title="Fill in the drop details">
-    In your settings file, set `mint.slug` (the collection slug from the drop's URL) and `mint.chain`. See [Configuring the Bot](/configuration#mint-settings).
+    In your settings file, set `mint.slug` (the collection slug from the drop's URL) and `mint.chain`. See [Configuring the Bot](/06-configuration#mint-settings).
   </Step>
   <Step title="Open the platform from the main menu">
-    Choose **OpenSea**, **Blever**, or **Transient** from the [main menu](/main-menu). The bot fetches the drop's details automatically.
+    Choose **OpenSea**, **Blever**, or **Transient** from the [main menu](/07-main-menu). The bot fetches the drop's details automatically.
   </Step>
   <Step title="Select your wallets">
-    A checklist of your configured wallets appears. Pick which ones you want to mint with. See [Setting Up Your Wallets](/wallet-setup#selecting-wallets-when-minting) for the keyboard controls.
+    A checklist of your configured wallets appears. Pick which ones you want to mint with. See [Setting Up Your Wallets](/05-wallet-setup#selecting-wallets-when-minting) for the keyboard controls.
   </Step>
   <Step title="Select a stage or phase">
-    The bot lists every sale stage (OpenSea/Blever call these "stages" or "phases"; Transient calls them "presale"/"public sale"), with its price, time window, and per-wallet limit:
+    The bot lists every sale stage, with its price, time window, and per-wallet limit:
 
     ```
-      [0] Allowlist          — Jul 10, 9:00 AM  → Jul 10, 10:00 AM  — 0.05 ETH  — AL only  — max 2/wallet
-      [1] Public Sale        — Jul 10, 10:00 AM → —                 — 0.08 ETH  — Public   — max 5/wallet
+      [0] Allowlist          - Jul 10, 9:00 AM  -> Jul 10, 10:00 AM  - 0.05 ETH  - AL only  - max 2/wallet
+      [1] Public Sale        - Jul 10, 10:00 AM -> -                 - 0.08 ETH  - Public   - max 5/wallet
     ```
-
-    <Frame caption="Screenshot: the stage/phase list with a stage selected">
-      <img src="/images/placeholder-stage-list.png" />
-    </Frame>
 
     Pick the stage you're eligible for and want to mint in.
-
-    <Tip>
-      Picked the wrong wallets? Choosing **↩ Back (reselect wallets)** here returns you to the wallet checklist without losing your place. **⌂ Main Menu** exits the whole flow back to the top — the two look similar, so double-check before pressing Enter.
-    </Tip>
   </Step>
   <Step title="Wait for eligibility checks">
-    The bot signs into the platform with each selected wallet (a free, gasless "Sign-In With Ethereum" signature — not a transaction) and checks each wallet's remaining allowance for the stage you picked. If a wallet isn't eligible for an allowlist stage, it's excluded automatically.
+    The bot signs into the platform with each selected wallet (a free, gasless "Sign-In With Ethereum" signature, not a transaction) and checks each wallet's remaining allowance for the stage you picked. If a wallet isn't eligible for an allowlist stage, it's excluded automatically.
+
+    <Note>
+      Your `mint.quantity_per_wallet` (or a per-wallet override) is a request, not a guarantee. If the stage's own per-wallet limit is lower than what you configured, the bot automatically caps your quantity down to match, and prints a warning when it does. If a wallet already minted some units earlier, the bot also subtracts those from what it will try to mint this time, so you never accidentally attempt more than a wallet is actually allowed. This check runs again right before the stage opens, in case the project changes the limit at the last minute.
+    </Note>
   </Step>
   <Step title="Choose a mint mode">
-    Finally, pick **how** you want to mint — right now, at a scheduled time, waiting for cheap gas, or just a dry run. See [Mint Modes Explained](/mint-modes) for what each one does and when to use it.
+    Finally, pick **how** you want to mint: right now, at a scheduled time, waiting for cheap gas, or just a dry run. See [Mint Modes Explained](/09-mint-modes) for what each one does and when to use it.
 
-    <Frame caption="Screenshot: the mode selection menu">
-      <img src="/images/placeholder-mode-menu.png" />
+    <Frame caption="The mode selection menu">
+      <img src="/images/mint-modes.png" />
     </Frame>
   </Step>
 </Steps>
@@ -52,24 +48,26 @@ OpenSea, Blever, and Transient all follow the same basic flow. This page walks t
     Available modes: Scheduled, Manual, Gas Monitor, Dry run, and MEV Tip (Ethereum only).
   </Accordion>
   <Accordion title="Blever">
-    Available modes: Scheduled, Manual, Gas Monitor, Dry run, and MEV Tip (Ethereum only). Behind the scenes, Blever mints use a signed "voucher" from Blever's servers rather than raw calldata — this doesn't change anything about how you use the bot.
+    Available modes: Scheduled, Manual, Gas Monitor, Dry run, and MEV Tip (Ethereum only).
   </Accordion>
   <Accordion title="Transient">
-    Available modes: Scheduled, Manual, and Dry run only — **no Gas Monitor or MEV Tip modes** for Transient drops.
+    Available modes: Scheduled, Manual, and Dry run only. **No Gas Monitor or MEV Tip modes** for Transient drops.
 
     Transient also charges a separate **protocol fee** on top of the mint price. If your `mint.mint_price_eth` doesn't cover that fee, the bot will warn you and ask for confirmation before continuing:
 
     ```
-    This drop charges an additional platform fee of 0.0005 ETH/NFT.
+    This drop charges an additional platform fee of 0.0009 ETH/NFT.
     Proceed anyway (pay the extra fee)?
     ```
 
-    Read this prompt carefully — confirming means you'll pay more than `mint_price_eth` alone.
-
-    Transient's allowlist (presale) uses a public Merkle proof the bot checks automatically — no sign-in required.
+    Read this prompt carefully. Confirming means you'll pay more than `mint_price_eth` alone.
   </Accordion>
 </AccordionGroup>
 
 ## After the mint
 
 If you set `discord_webhook_url` in your config, a summary is posted to your Discord webhook automatically. Otherwise, results print directly in the terminal: one line per wallet showing the transaction hash and whether it confirmed or reverted.
+
+<Warning>
+  With Flashbots Protect on, the bot only waits 40 seconds for your transaction to land before it logs `FAILED`. That log line can mean the transaction genuinely failed, or it can just mean it hadn't been mined yet when the bot stopped waiting. If you see `FAILED` while using Flashbots Protect, check the transaction on a block explorer before assuming it didn't go through. It may still get mined after the 40-second mark.
+</Warning>
