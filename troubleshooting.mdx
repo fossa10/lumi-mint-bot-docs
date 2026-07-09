@@ -1,0 +1,115 @@
+---
+title: 'Troubleshooting & FAQ'
+description: 'Common issues and what to do about them'
+---
+
+## License errors
+
+<AccordionGroup>
+  <Accordion title='"Could not reach license server. Check your internet connection."'>
+    The bot needs live internet access to its license server on every launch, there's no offline mode. Check your connection, and check whether your network (some corporate/school/public networks) blocks outbound HTTPS requests.
+  </Accordion>
+  <Accordion title="The bot prints a rejection reason and exits immediately">
+    The bot shows the exact reason your license server sent, read it first. Common causes:
+    - The key was already activated on a different computer (see the machine-lock note in [Getting a License Key](/getting-license-key)).
+    - The key expired (keys last 30 days from generation).
+    - The key was typo'd when pasted into `authentication.license_key`.
+
+    Re-running `/generate-license-key` in Discord refreshes your key for another 30 days and unlocks it from its previous machine.
+  </Accordion>
+  <Accordion title='"Your version is outdated" and the bot updates itself'>
+    This is expected, not an error, the bot auto-updates when the license server says a newer version is required. Let it finish; it will relaunch on its own. Don't close the window or delete the executable mid-update.
+
+    If the auto-update fails for some reason, download the bot manually, see the Download section on the [Installation & First Run](/installation#download) page.
+  </Accordion>
+</AccordionGroup>
+
+## First run / config
+
+<AccordionGroup>
+  <Accordion title="The bot printed a message about a config file and closed, is it broken?">
+    No, this is expected on the very first run. See [Installation & First Run](/installation#run-it-once). Open the newly created `lumi_mint_bot_config.yaml`, fill it in, and run the bot again.
+  </Accordion>
+  <Accordion title="I edited the config but nothing changed">
+    Choose **↺ Reload Config** from the main menu, or fully restart the bot.
+  </Accordion>
+</AccordionGroup>
+
+## Minting
+
+<AccordionGroup>
+  <Accordion title='A mint fails with something like a "price guard" error'>
+    `mint.mint_price_eth` is a price **ceiling**, the bot refuses to mint if the drop's real price is higher than this value. Check the drop's actual price and raise `mint_price_eth` to match (or higher). On Transient, remember to also account for the separate protocol fee, see [Minting Guide](/minting-guide#platform-differences).
+  </Accordion>
+  <Accordion title="Gas Monitor mode (C) seems stuck, printing 'Base fee: X gwei, waiting...' forever">
+    Gas Monitor waits for the network base fee to drop below `gas.base_gwei`. If you left this too low, that threshold may be unrealistically low for the chain you're on. Set `gas.base_gwei` to a realistic value, see the warning in [Configuring the Bot](/configuration#gas-settings).
+  </Accordion>
+  <Accordion title="I'm seeing rapid repeated log lines like 'not open yet, <function name>'">
+    This is "snipe mode," triggered when `gas.gas_limit` is `0`. The bot is deliberately retesting the transaction very quickly until the contract accepts it, useful when you're not sure of the exact open time. It's not an error. Be aware this generates real RPC traffic and can hit rate limits on free public endpoints; consider using a dedicated/paid RPC (`rpcs` in [Configuring the Bot](/configuration#rpc-endpoints)) if this happens often.
+  </Accordion>
+  <Accordion title="MEV Tip mode isn't landing my mint">
+    "Bundle did not land within max_blocks" means your tip (`bundle.tip_eth`) likely wasn't competitive against other bots targeting the same block. Try increasing it, see [Mint Modes Explained](/mint-modes#e-mev-tip).
+  </Accordion>
+</AccordionGroup>
+
+## Wallets
+
+<AccordionGroup>
+  <Accordion title="One of my wallets didn't load / isn't showing in the wallet checklist">
+    Check the terminal output when the bot starts, it prints a warning and skips any wallet entry it couldn't load (bad private key format). See [Setting Up Your Wallets](/wallet-setup) for the exact format required.
+  </Accordion>
+</AccordionGroup>
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="How does gas actually work?">
+    **Gas limit** is the maximum number of **gas units** you're willing to spend. How much a transaction actually needs depends on how complex the contract call is. On L2 chains (Abstract, ApeChain, Arbitrum, etc.), gas limit requirements can spike during heavy traffic or demand.
+
+    **Gas fee** (stated in gwei) is the maximum amount you're willing to pay **per unit of gas** (1 gwei = 0.000000001 ETH).
+
+    ```
+    Gas cost = Gas limit x Gas fee
+    ```
+
+    Example: gas limit `200,000` units, gas fee `100` gwei:
+
+    ```
+    200,000 x 100 = 20,000,000 gwei = 0.02 ETH
+    ```
+
+    Gas fee itself has two components:
+
+    ```
+    Gas fee = Base fee + Priority fee
+    ```
+
+    The base fee is set entirely by network demand at the moment of your transaction, you can't influence it. The priority fee is an optional tip paid directly to validators/miners to incentivize them to prioritize your transaction; a higher tip generally means faster processing.
+
+    **Example 1: max fee 80 gwei, priority fee 80 gwei**
+
+    You're willing to pay up to 80 gwei per unit of gas total, and you're willing to let all 80 of that go to the priority fee if needed.
+
+    - Base fee is 50 gwei: you pay 50 gwei base fee (burned) and 30 gwei priority fee (to validators).
+    - Base fee is 70 gwei: you pay 70 gwei base fee and 10 gwei priority fee.
+    - Base fee exceeds 80 gwei: your transaction doesn't get processed.
+
+    **Example 2: max fee 80 gwei, priority fee 40 gwei**
+
+    You're willing to pay up to 80 gwei per unit of gas total, but only up to 40 gwei of that as a priority fee.
+
+    - Base fee is 50 gwei: you pay 50 gwei base fee and 30 gwei priority fee (not 40, since max fee minus base fee is only 30).
+    - Base fee is 30 gwei: you pay 30 gwei base fee and 40 gwei priority fee (the full 40, since max fee minus base fee leaves room for it).
+
+    <Warning>
+      When a transaction fails, you still pay for the computational work already done before it failed. If a contract needs 200,000 gas units to complete but your transaction reverts after only 30,000 units of work, you pay for those 30,000 units at your set gas fee, not the full 200,000. This holds on most chains, with one notable exception: on the Monad Testnet, a failed transaction still charges the full gas limit, not just the units actually used.
+    </Warning>
+  </Accordion>
+  <Accordion title="How much gas should I use?">
+    This is probably the most important question every botter has to answer. The math is simple: more gas means a higher chance of hitting the mint, but it also means lower profit.
+
+    Finding the right balance is the hard part, and there's no single correct answer. Network traffic, remaining supply, hype, how many other bots are competing for the same drop, and your own risk tolerance all change the calculation every time. Ultimately, you decide your own gas setting during ACO. We won't give you a specific number to plug in.
+
+    For a deeper breakdown of this topic, see [this post](https://x.com/geauser/status/2043438406173151616) (credit to Umi's Dev).
+  </Accordion>
+</AccordionGroup>

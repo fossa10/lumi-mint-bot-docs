@@ -3,17 +3,17 @@ title: 'Minting Guide: OpenSea, Blever & Transient'
 description: 'The shared step-by-step flow for minting from a supported platform'
 ---
 
-OpenSea, Blever, and Transient all follow the same basic flow. This page walks through it once, and platform-specific differences are called out where they matter. If you're minting from a contract that isn't on any of these three platforms, see [Custom Contract Mode](/10-custom-contract) instead.
+OpenSea, Blever, and Transient all follow the same basic flow. This page walks through it once, and platform-specific differences are called out where they matter. If you're minting from a contract that isn't on any of these three platforms, see [Custom Contract Mode](/custom-contract) instead.
 
 <Steps>
   <Step title="Fill in the drop details">
-    In your settings file, set `mint.slug` (the collection slug from the drop's URL) and `mint.chain`. See [Configuring the Bot](/06-configuration#mint-settings).
+    In your settings file, set `mint.slug` (the collection slug from the drop's URL) and `mint.chain`. See [Configuring the Bot](/configuration#mint-settings).
   </Step>
   <Step title="Open the platform from the main menu">
-    Choose **OpenSea**, **Blever**, or **Transient** from the [main menu](/07-main-menu). The bot fetches the drop's details automatically.
+    Choose **OpenSea**, **Blever**, or **Transient** from the [main menu](/main-menu). The bot fetches the drop's details automatically.
   </Step>
   <Step title="Select your wallets">
-    A checklist of your configured wallets appears. Pick which ones you want to mint with. See [Setting Up Your Wallets](/05-wallet-setup#selecting-wallets-when-minting) for the keyboard controls.
+    A checklist of your configured wallets appears. Pick which ones you want to mint with. See [Setting Up Your Wallets](/wallet-setup#selecting-wallets-when-minting) for the keyboard controls.
   </Step>
   <Step title="Select a stage or phase">
     The bot lists every sale stage, with its price, time window, and per-wallet limit:
@@ -33,7 +33,7 @@ OpenSea, Blever, and Transient all follow the same basic flow. This page walks t
     </Note>
   </Step>
   <Step title="Choose a mint mode">
-    Finally, pick **how** you want to mint: right now, at a scheduled time, waiting for cheap gas, or just a dry run. See [Mint Modes Explained](/09-mint-modes) for what each one does and when to use it.
+    Finally, pick **how** you want to mint: right now, at a scheduled time, waiting for cheap gas, or just a dry run. See [Mint Modes Explained](/mint-modes) for what each one does and when to use it.
 
     <Frame caption="The mode selection menu">
       <img src="/images/mint-modes.png" />

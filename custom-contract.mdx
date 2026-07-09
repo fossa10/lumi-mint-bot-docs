@@ -9,7 +9,7 @@ Custom Contract mode lets you mint from **any** NFT contract, no OpenSea/Blever/
   Because there's no platform to validate anything, mistakes here go straight to the blockchain. Always try **Dry run** first, and double-check the contract address before minting for real.
 </Warning>
 
-From the [main menu](/07-main-menu), choose **Custom Contract**. After selecting your wallets, you'll be asked:
+From the [main menu](/main-menu), choose **Custom Contract**. After selecting your wallets, you'll be asked:
 
 ```
 Calldata source:
@@ -19,7 +19,7 @@ Calldata source:
 
 ## Option A: Config values
 
-Use this if you already know exactly what you want to call. Fill in the `custom_contract` section of your settings file ahead of time, see the full field reference in [Configuring the Bot](/06-configuration#custom-contract-settings):
+Use this if you already know exactly what you want to call. Fill in the `custom_contract` section of your settings file ahead of time, see the full field reference in [Configuring the Bot](/configuration#custom-contract-settings):
 
 ```yaml
 custom_contract:
@@ -44,7 +44,7 @@ Use this if you don't know the exact mint function, or want the bot to help you 
     Leave blank to use the one already in your config, or type a new one.
   </Step>
   <Step title="Let the bot inspect the contract">
-    The bot fetches the contract's available functions, using its verified source code if you've set an `explorer_api_keys` value (see [Configuring the Bot](/06-configuration#api-keys)), or a best-effort guess from bytecode if not. It shows any mint price, total supply, and per-wallet caps it can detect.
+    The bot fetches the contract's available functions, using its verified source code if you've set an `explorer_api_keys` value (see [Configuring the Bot](/configuration#api-keys)), or a best-effort guess from bytecode if not. It shows any mint price, total supply, and per-wallet caps it can detect.
   </Step>
   <Step title="Select a function">
     Pick the mint function from the numbered list shown. The bot also shows how many tokens each of your loaded wallets has already minted from this contract, if it can detect a per-wallet cap.
@@ -68,7 +68,7 @@ Use this if you don't know the exact mint function, or want the bot to help you 
 
 ## Mode menu
 
-Same as other platforms: Scheduled, Manual, Gas Monitor, Dry run, see [Mint Modes Explained](/09-mint-modes). MEV Tip is also available here (Ethereum only, and only when using "Same for all wallets" parameter mode), but before submitting it runs an automatic compatibility check:
+Same as other platforms: Scheduled, Manual, Gas Monitor, Dry run, see [Mint Modes Explained](/mint-modes). MEV Tip is also available here (Ethereum only, and only when using "Same for all wallets" parameter mode), but before submitting it runs an automatic compatibility check:
 
 ```
 [PASS] EOA gate: not found

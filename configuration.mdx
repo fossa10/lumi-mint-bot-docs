@@ -3,7 +3,7 @@ title: 'Configuring the Bot'
 description: 'Every field in lumi_mint_bot_config.yaml, explained'
 ---
 
-All settings live in `lumi_mint_bot_config.yaml`, created automatically next to the executable on first run (see [Installation & First Run](/04-installation)). Open it in any plain text editor.
+All settings live in `lumi_mint_bot_config.yaml`, created automatically next to the executable on first run (see [Installation & First Run](/installation)). Open it in any plain text editor.
 
 <Tip>
   Edited the file while the bot is running? You don't need to restart. Choose **↺ Reload Config** from the main menu.
@@ -16,7 +16,7 @@ All settings live in `lumi_mint_bot_config.yaml`, created automatically next to 
 ## Authentication
 
 <ParamField path="authentication.license_key" type="string" required>
-  Your Lumi license key. See [Getting a License Key](/03-getting-license-key). The bot won't start without a valid one.
+  Your Lumi license key. See [Getting a License Key](/getting-license-key). The bot won't start without a valid one.
 </ParamField>
 
 ## API keys
@@ -51,7 +51,7 @@ All settings live in `lumi_mint_bot_config.yaml`, created automatically next to 
 ## Wallets
 
 <ParamField path="wallets" type="list of strings" required>
-  Wallets available to mint from. See [Setting Up Your Wallets](/05-wallet-setup) for the full format (`label,0xprivatekey`).
+  Wallets available to mint from. See [Setting Up Your Wallets](/wallet-setup) for the full format (`label,0xprivatekey`).
 </ParamField>
 
 ## Mint settings
@@ -68,6 +68,16 @@ These apply to **OpenSea**, **Blever**, and **Transient** modes.
 
 <ParamField path="mint.quantity_per_wallet" type="integer" required>
   How many NFTs each selected wallet should mint. Defaults to `1`.
+
+  <Warning title="OpenSea's per-wallet limit is often cumulative, not per-stage">
+    If your wallet is eligible for more than one OpenSea stage, for example both **GTD** (guaranteed) and **FCFS** (first come first served), check the "limit per wallet" on each stage carefully. That number is usually a running total across every stage you're eligible for, not a fresh allowance per stage.
+
+    <Frame caption="GTD shows a limit of 1 per wallet, FCFS shows a limit of 2 per wallet. Minting 1 in GTD leaves only 1 remaining in FCFS, not 2.">
+      <img src="/images/opensea-wallet-limit.png" />
+    </Frame>
+
+    The bot automatically checks what a wallet has already minted before attempting more, so you won't overshoot the real limit even if the stage's displayed number is misleading. See the [Minting Guide](/minting-guide#wait-for-eligibility-checks) for details on this check.
+  </Warning>
 </ParamField>
 
 <ParamField path="mint.mint_price_eth" type="float" required>
@@ -78,7 +88,7 @@ These apply to **OpenSea**, **Blever**, and **Transient** modes.
 
 ## Custom contract settings
 
-Only used by [Custom Contract mode](/10-custom-contract). See that page for the "Discover contract" flow, which can fill most of this in for you interactively instead.
+Only used by [Custom Contract mode](/custom-contract). See that page for the "Discover contract" flow, which can fill most of this in for you interactively instead.
 
 <ParamField path="custom_contract.contract_address" type="string" required>
   The target contract's address, e.g. `contract_address: "0xYourContractAddress"`.
@@ -129,6 +139,10 @@ Only used by [Custom Contract mode](/10-custom-contract). See that page for the 
 
   <Tip>
     Most botters set `priority_gwei` equal to `base_gwei`. On an EIP-1559 chain, the actual tip you pay is capped at whatever room is left between your max fee (`base_gwei`) and the real network base fee, so setting your priority this high just means you're always offering the full amount you're willing to pay as a tip. That maximizes how competitively your transaction is ordered against other bots during a busy mint, up to the ceiling you already set.
+  </Tip>
+
+  <Tip>
+    Not sure what numbers to plug in? Run `/gas-calculator` in the `🤖│bot-commands` channel in Discord to work out a gwei value.
   </Tip>
 </ParamField>
 
@@ -188,7 +202,7 @@ wallet_overrides:
 
 ## Bundle / MEV settings
 
-Used by [MEV Tip mode](/09-mint-modes#e-mev-tip).
+Used by [MEV Tip mode](/mint-modes#e-mev-tip).
 
 <ParamField path="bundle.tip_eth" type="float" required>
   ETH tip paid to the block builder per bundle submission. Size this against what competitor bots are likely tipping for the same drop. The default (`0.001`) is intentionally conservative and may lose every block during a competitive mint.

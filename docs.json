@@ -15,37 +15,38 @@
           {
             "group": "Get Started",
             "pages": [
-              "01-welcome",
-              "02-requirements",
-              "03-getting-license-key",
-              "04-installation",
-              "05-wallet-setup",
-              "06-configuration"
+              "welcome",
+              "requirements",
+              "getting-license-key",
+              "installation",
+              "wallet-setup",
+              "configuration"
             ]
           },
           {
             "group": "Advanced Setup",
             "pages": [
-              "14-rpc-setup",
-              "15-proxy-setup",
-              "16-vps-setup"
+              "rpc-setup",
+              "proxy-setup",
+              "vps-setup"
             ]
           },
           {
             "group": "Using the Bot",
             "pages": [
-              "07-main-menu",
-              "08-minting-guide",
-              "09-mint-modes",
-              "10-custom-contract",
-              "11-wallet-tools"
+              "main-menu",
+              "minting-guide",
+              "mint-modes",
+              "custom-contract",
+              "wallet-tools",
+              "logs"
             ]
           },
           {
             "group": "Help",
             "pages": [
-              "12-troubleshooting",
-              "13-glossary"
+              "troubleshooting",
+              "glossary"
             ]
           }
         ]
