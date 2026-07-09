@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "name": "Lumi Mint Bot",
+  "name": "Lumi Mint Bot (Beta)",
   "theme": "maple",
   "colors": {
     "primary": "#16A34A",
