@@ -11,11 +11,9 @@ description: 'Common issues and what to do about them'
   </Accordion>
   <Accordion title="The bot prints a rejection reason and exits immediately">
     The bot shows the exact reason your license server sent, read it first. Common causes:
-    - The key was already activated on a different computer (see the machine-lock note in [Getting a License Key](/getting-license-key)).
-    - The key expired (keys last 30 days from generation).
+    - The key was already activated on a different computer, and permanently locked to it (see the machine-lock note in [Getting a License Key](/getting-license-key)). Open a support ticket in Discord to get it unlocked.
+    - The key expired (keys last 30 days from generation). Re-running `/generate-license-key` refreshes it for another 30 days, but it stays locked to the same machine.
     - The key was typo'd when pasted into `authentication.license_key`.
-
-    Re-running `/generate-license-key` in Discord refreshes your key for another 30 days and unlocks it from its previous machine.
   </Accordion>
   <Accordion title='"Your version is outdated" and the bot updates itself'>
     This is expected, not an error, the bot auto-updates when the license server says a newer version is required. Let it finish; it will relaunch on its own. Don't close the window or delete the executable mid-update.
