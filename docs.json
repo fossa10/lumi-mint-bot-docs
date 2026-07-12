@@ -10,6 +10,7 @@
   "appearance": {
     "default": "dark"
   },
+  "favicon": "/images/pulse_anchor_logo.png",
   "navigation": {
     "tabs": [
       {
