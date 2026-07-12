@@ -13,6 +13,7 @@ Wallet Tools:
   Consolidate Tokens
   Disperse NFT
   Consolidate NFT
+  Proxy Checker
   ⌂  Main Menu
 ```
 
@@ -90,3 +91,22 @@ The reverse: gathers NFTs from several of your wallets into one destination wall
 <Frame caption="The NFT selection checklist during Consolidate NFT, showing token IDs grouped by wallet">
   <img src="/images/consolidate-nft.png" />
 </Frame>
+
+## Proxy Checker
+
+Benchmarks the proxies in your config against a target URL, so you can see which ones are fast enough to use before a drop.
+
+1. Enter a target URL, or leave blank to use the default (`https://gql.opensea.io/graphql`).
+2. The bot sends 10 requests through each proxy in your config, plus one **Direct** run with no proxy as a baseline. All proxies are tested in parallel.
+3. Read the summary table, sorted fastest average first.
+
+```
+=== Proxy Check Results — https://gql.opensea.io/graphql ===
+
+  Proxy                     Success      Min       Max       Avg   Median
+  ------------------------  -------  -------  --------  --------  -------
+  Direct                      10/10   46.1ms    73.7ms    58.5ms   58.6ms
+  gw.dataimpulse.com:823      10/10  200.4ms  7332.7ms  1492.8ms  831.9ms
+```
+
+Proxy entries must use the `login:password@hostname:port` format from your config.
