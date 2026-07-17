@@ -23,7 +23,7 @@ Checks which of your wallets are allowlisted for a drop, without minting anythin
 
 <Steps>
   <Step title="Pick a platform">
-    OpenSea, Blever, or Transient.
+    OpenSea, Blever, Transient, or Scatter.
   </Step>
   <Step title="Enter the slug">
     Leave blank to use the slug already in your config.
@@ -37,6 +37,10 @@ Checks which of your wallets are allowlisted for a drop, without minting anythin
     ```
   </Step>
 </Steps>
+
+<Note>
+  Scatter's checker can only discover gated (allowlist) invite lists that at least one of your loaded wallets qualifies for. It has no way to show every list that exists ahead of time. Public lists are summarized as a single "all loaded wallets eligible" line instead of listing every wallet, since there's nothing to distinguish between them.
+</Note>
 
 ## Check Token Balance
 

@@ -1,16 +1,16 @@
 ---
-title: 'Minting Guide: OpenSea, Blever & Transient'
+title: 'Minting Guide: OpenSea, Blever, Transient & Scatter'
 description: 'The shared step-by-step flow for minting from a supported platform'
 ---
 
-OpenSea, Blever, and Transient all follow the same basic flow. This page walks through it once, and platform-specific differences are called out where they matter. If you're minting from a contract that isn't on any of these three platforms, see [Custom Contract Mode](/custom-contract) instead.
+OpenSea, Blever, Transient, and Scatter all follow the same basic flow. This page walks through it once, and platform-specific differences are called out where they matter. If you're minting from a contract that isn't on any of these platforms, see [Custom Contract Mode](/custom-contract) instead.
 
 <Steps>
   <Step title="Fill in the drop details">
     In your settings file, set `mint.slug` (the collection slug from the drop's URL) and `mint.chain`. See [Configuring the Bot](/configuration#mint-settings).
   </Step>
   <Step title="Open the platform from the main menu">
-    Choose **OpenSea**, **Blever**, or **Transient** from the [main menu](/main-menu). The bot fetches the drop's details automatically.
+    Choose **OpenSea**, **Blever**, **Transient**, or **Scatter** from the [main menu](/main-menu). The bot fetches the drop's details automatically.
   </Step>
   <Step title="Select your wallets">
     A checklist of your configured wallets appears. Pick which ones you want to mint with. See [Setting Up Your Wallets](/wallet-setup#selecting-wallets-when-minting) for the keyboard controls.
@@ -61,6 +61,11 @@ OpenSea, Blever, and Transient all follow the same basic flow. This page walks t
     ```
 
     Read this prompt carefully. Confirming means you'll pay more than `mint_price_eth` alone.
+  </Accordion>
+  <Accordion title="Scatter">
+    Available modes: Scheduled, Manual, and Dry run only. **No Gas Monitor or MEV Tip modes** for Scatter drops.
+
+    One quirk: a merkle-gated (allowlist) invite list only appears in the list-selection menu if at least one of your loaded wallets is actually eligible for it. Scatter has no way to show gated lists you don't qualify for ahead of time. Public lists always show.
   </Accordion>
 </AccordionGroup>
 
