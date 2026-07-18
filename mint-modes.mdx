@@ -24,6 +24,10 @@ Mode:
   New to the bot? Run **Dry run** first. It touches nothing on-chain and confirms your config, wallets, and stage selection are all correct before you risk a real transaction.
 </Tip>
 
+<Note>
+  If you set `send_to_address` in your config, modes A, B, and C will ask whether to auto-send each wallet's mint to that address right after it confirms. MEV Tip and Batch Tip don't support this yet, the bot will warn and skip it if you have `send_to_address` set and pick one of those. See `send_to_address` in [Configuring the Bot](/configuration#api-keys).
+</Note>
+
 ## A - Scheduled
 
 **Use when:** you know roughly when the drop opens and want the bot to handle the exact timing for you.

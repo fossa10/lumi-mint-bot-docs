@@ -48,6 +48,10 @@ All settings live in `lumi_mint_bot_config.yaml`, created automatically next to 
   A Discord webhook URL, written as `discord_webhook_url: "https://discord.com/api/webhooks/..."`. If set, the bot posts a summary embed after each mint attempt. Leave as `""` to disable.
 </ParamField>
 
+<ParamField path="send_to_address" type="string">
+  An optional destination address, written as `send_to_address: "0xYourAddressHere"`. If set, each wallet automatically sends whatever it just minted to this address right after its own mint confirms. The transfer uses live market gas, not your `gas.*` settings. Leave as `""` to keep NFTs on the minting wallets (default).
+</ParamField>
+
 ## Wallets
 
 <ParamField path="wallets" type="list of strings" required>

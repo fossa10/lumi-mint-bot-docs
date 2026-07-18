@@ -1,5 +1,5 @@
 ---
-title: 'Minting Guide: OpenSea, Blever, Transient & Scatter'
+title: 'Minting Guide: Launchpads'
 description: 'The shared step-by-step flow for minting from a supported platform'
 ---
 
@@ -38,6 +38,9 @@ OpenSea, Blever, Transient, and Scatter all follow the same basic flow. This pag
     <Frame caption="The mode selection menu">
       <img src="/images/mint-modes.png" />
     </Frame>
+  </Step>
+  <Step title="Optional: auto-send minted NFTs">
+    If you set `send_to_address` in your config, the bot asks whether to send each wallet's mint to that address right after it confirms. You can accept the default, type a different address for this run, or leave it blank to keep NFTs on the minting wallets. See `send_to_address` in [Configuring the Bot](/configuration#api-keys).
   </Step>
 </Steps>
 
