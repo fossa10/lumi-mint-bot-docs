@@ -23,7 +23,7 @@ This matters for a reason beyond convenience: your private keys and wallets neve
 
 <Steps>
   <Step title="Create your own Telegram bot">
-    Open Telegram, search for **@BotFather**, and send `/newbot`. Follow the prompts (choose a name, then a username ending in `bot`). BotFather replies with a token that looks like `123456789:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`.
+    Open Telegram, search for **@BotFather**, and send `/newbot`. Follow the prompts (choose a name, then a username ending in `bot`, this username is the unique ID for your bot, so if it's taken you'll need to try another). BotFather replies with a token that looks like `123456789:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`.
   </Step>
   <Step title="Add the token to your config">
     Paste it into `telegram_bot_token` in `lumi_mint_bot_config.yaml`. See [Configuring the Bot](/configuration#telegram-remote-control).
@@ -52,7 +52,7 @@ This matters for a reason beyond convenience: your private keys and wallets neve
 
 `/mint` asks the same questions as minting from the terminal (see [Minting Guide](/minting-guide)), just over chat and in a slightly different order:
 
-1. **Platform**: OpenSea, Blever, Transient, Scatter, or LaunchMyNFT.
+1. **Platform**: OpenSea, Blever, Transient, or Scatter.
 2. **Slug**: since you don't have your config open on your phone, you type the collection slug directly rather than it being read from `mint.slug`.
 3. **Wallets**: a checklist, tap to select, tap **Select All** / **Deselect All**, then **Done**. Leaving nothing checked when you tap Done uses every configured wallet.
 4. **Stage / phase**: same as the terminal's stage list.
@@ -76,9 +76,6 @@ Once minting starts, you'll get a message when it actually begins submitting, an
   </Accordion>
   <Accordion title="Custom Contract and Wallet Tools aren't available remotely">
     Both stay terminal-only for now.
-  </Accordion>
-  <Accordion title="The keystore password can't be typed over Telegram">
-    If your wallets use encrypted keystore files rather than raw private keys, the bot still needs that password entered locally within roughly 4 hours of a remote mint. Type it at the terminal once when you start the bot, or leave the terminal session open. See [Setting Up Your Wallets](/wallet-setup) for keystore vs. raw key format.
   </Accordion>
 </AccordionGroup>
 
