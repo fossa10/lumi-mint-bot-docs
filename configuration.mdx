@@ -52,6 +52,18 @@ All settings live in `lumi_mint_bot_config.yaml`, created automatically next to 
   An optional destination address, written as `send_to_address: "0xYourAddressHere"`. If set, each wallet automatically sends whatever it just minted to this address right after its own mint confirms. The transfer uses live market gas, not your `gas.*` settings. Leave as `""` to keep NFTs on the minting wallets (default).
 </ParamField>
 
+## Telegram remote control
+
+Optional. See [Telegram Remote Control](/telegram-control) for full setup steps.
+
+<ParamField path="telegram_bot_token" type="string">
+  Token from [@BotFather](https://t.me/BotFather), enables starting and monitoring mints from Telegram. Leave `""` to disable.
+</ParamField>
+
+<ParamField path="telegram_chat_id" type="string">
+  Leave `""` on first setup. Auto-fills the first time you message your bot, and the bot only responds to that chat afterward.
+</ParamField>
+
 ## Wallets
 
 <ParamField path="wallets" type="list of strings" required>

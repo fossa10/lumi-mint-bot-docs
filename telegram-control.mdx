@@ -1,0 +1,87 @@
+---
+title: 'Telegram Remote Control'
+description: 'Start and monitor mints from your phone while the bot runs on your desktop'
+---
+
+Telegram remote control lets you trigger a mint, check status, and cancel a scheduled mint from your phone, using a private Telegram bot only you can talk to.
+
+<Note>
+  This is optional. The bot works exactly the same without it, this just adds a second way to control it.
+</Note>
+
+## How it works
+
+The bot itself still has to be running on your Windows or Mac machine, the same as normal. Telegram doesn't replace that, it's a remote control for it.
+
+This matters for a reason beyond convenience: your private keys and wallets never leave your own computer. Telegram is only used to send commands and receive status updates, the same way pressing keys at the terminal would. This is different from most other Telegram or web-based mint bots, which typically ask you to hand over your private key to a server you don't control so it can mint on your behalf. Lumi Mint Bot never does this, with or without Telegram control turned on.
+
+<Tip>
+  Want the bot running around the clock so it's always reachable from your phone, instead of only while your own PC is on? See [VPS Setup](/vps-setup).
+</Tip>
+
+## Setup
+
+<Steps>
+  <Step title="Create your own Telegram bot">
+    Open Telegram, search for **@BotFather**, and send `/newbot`. Follow the prompts (choose a name, then a username ending in `bot`). BotFather replies with a token that looks like `123456789:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`.
+  </Step>
+  <Step title="Add the token to your config">
+    Paste it into `telegram_bot_token` in `lumi_mint_bot_config.yaml`. See [Configuring the Bot](/configuration#telegram-remote-control).
+  </Step>
+  <Step title="Link your Telegram account">
+    Restart the bot (or Reload Config), then search for your new bot in Telegram and send it `/start`. The bot saves your chat automatically and replies once linked, no need to type anything into `telegram_chat_id` yourself.
+
+    <Note>
+      From then on, the bot only responds to that one chat. Anyone else who somehow finds your bot's username can't issue commands.
+    </Note>
+  </Step>
+  <Step title="Confirm it's working">
+    Send `/status`. You should get a reply confirming the bot is online.
+  </Step>
+</Steps>
+
+## Commands
+
+| Command | What it does |
+|---|---|
+| `/mint` | Starts a new mint, walking you through the same choices as the terminal menu. |
+| `/status` | Confirms the bot is online and listening. |
+| `/cancel` | Cancels whatever `/mint` is currently doing, including a Scheduled mint that's mid-countdown. |
+
+## What /mint asks
+
+`/mint` asks the same questions as minting from the terminal (see [Minting Guide](/minting-guide)), just over chat and in a slightly different order:
+
+1. **Platform**: OpenSea, Blever, Transient, Scatter, or LaunchMyNFT.
+2. **Slug**: since you don't have your config open on your phone, you type the collection slug directly rather than it being read from `mint.slug`.
+3. **Wallets**: a checklist, tap to select, tap **Select All** / **Deselect All**, then **Done**. Leaving nothing checked when you tap Done uses every configured wallet.
+4. **Stage / phase**: same as the terminal's stage list.
+5. **Quantity per wallet** and **max mint price** (price guard): type a value, or tap **Use default** to fall back to your config.
+6. **Eligibility check**: the bot checks every selected wallet and messages you the results, the same summary you'd see in the terminal.
+7. **Gas settings**: mode, multiplier or manual fee, gas limit, and Flashbots Protect, each with a **Use default** option.
+8. **Mode**: Scheduled or Manual only (see [Limitations](#limitations) below).
+9. **Send to address**: only asked if `send_to_address` is relevant, same as the terminal.
+
+<Tip>
+  Anywhere you see a **Use default** button or the words "blank/skip", you can either tap the button or type `skip` to fall back to your config value instead of typing one in.
+</Tip>
+
+Once minting starts, you'll get a message when it actually begins submitting, and a final summary with a success count. If a mint or transfer fails, the reason is included per wallet.
+
+## Limitations
+
+<AccordionGroup>
+  <Accordion title="Only Scheduled and Manual modes">
+    Gas Monitor, Dry run, MEV Tip, and Batch Tip aren't available remotely. Use the terminal for those. See [Mint Modes Explained](/mint-modes).
+  </Accordion>
+  <Accordion title="Custom Contract and Wallet Tools aren't available remotely">
+    Both stay terminal-only for now.
+  </Accordion>
+  <Accordion title="The keystore password can't be typed over Telegram">
+    If your wallets use encrypted keystore files rather than raw private keys, the bot still needs that password entered locally within roughly 4 hours of a remote mint. Type it at the terminal once when you start the bot, or leave the terminal session open. See [Setting Up Your Wallets](/wallet-setup) for keystore vs. raw key format.
+  </Accordion>
+</AccordionGroup>
+
+<Warning title="Run one bot instance per Telegram token">
+  Telegram only allows one running bot process to listen for a given token at a time. If you run two copies of the bot (for example, two different drops at once) with the **same** `telegram_bot_token` in both configs, they'll conflict: commands may silently go to the wrong instance, or stop arriving at all. If you run multiple instances at the same time, create a separate Telegram bot (a new token from @BotFather) for each one.
+</Warning>
