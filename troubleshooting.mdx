@@ -31,6 +31,39 @@ description: 'Common issues and what to do about them'
   <Accordion title="I edited the config but nothing changed">
     Choose **↺ Reload Config** from the main menu, or fully restart the bot.
   </Accordion>
+  <Accordion title="macOS blocks the file, or it won't open">
+    This is normal for a fresh download on a Mac, not a sign anything is wrong. Apps that aren't from the App Store need one extra step the first time.
+
+    **Step 1: Make the file runnable, then try opening it (one-time, using Terminal)**
+
+    A freshly downloaded file isn't marked as runnable yet. You only need to do this once per download.
+
+    1. Open Terminal: press `Cmd + Space`, type `Terminal`, press `Enter`.
+    2. Type `cd ` (with a space after it), then drag the folder containing the bot into the Terminal window. This fills in the folder path for you.
+    3. Press `Enter`.
+    4. Type `chmod +x lumi_mint_bot` and press `Enter`.
+    5. Try to open it: double-click the file in Finder, or type `./lumi_mint_bot` in Terminal and press `Enter`.
+
+    **Step 2: Only if macOS blocks it**
+
+    <Frame caption="The macOS warning after a fresh download">
+      <img src="/images/macos-blocked.png" />
+    </Frame>
+
+    You'll see a message saying the file "was blocked to protect your Mac." Click on Done.
+
+    1. Go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** next to the bot's name. You most likely need to enter your Mac Admin password to allow.
+
+    <Frame caption="Confirming Open Anyway in Privacy & Security">
+      <img src="/images/macos-open-anyway.png" />
+    </Frame>
+
+    2. Try opening it again: double-click the file in Finder, then click **Open** on the confirmation prompt, or type `./lumi_mint_bot` in Terminal.
+
+    <Tip>
+      If double-clicking opens a window full of garbled text and symbols instead of running the bot, the file still isn't marked runnable, go back to Step 1.
+    </Tip>
+  </Accordion>
 </AccordionGroup>
 
 ## Minting
