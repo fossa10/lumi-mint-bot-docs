@@ -78,6 +78,9 @@ description: 'Common issues and what to do about them'
   <Accordion title="I'm seeing rapid repeated log lines like 'not open yet, <function name>'">
     This is "snipe mode," triggered when `gas.gas_limit` is `0`. The bot is deliberately retesting the transaction very quickly until the contract accepts it, useful when you're not sure of the exact open time. It's not an error. Be aware this generates real RPC traffic and can hit rate limits on free public endpoints; consider using a dedicated/paid RPC (`rpcs` in [Configuring the Bot](/configuration#rpc-endpoints)) if this happens often.
   </Accordion>
+  <Accordion title="I'm seeing '429 Too Many Requests' errors from OpenSea">
+    OpenSea rate-limits by API key. This shows up most on Scheduled mode with many wallets, since they all poll for calldata around the same moment. Add more than one key to `opensea_api_key` (as a list), wallets get distributed round-robin across them, spreading the load. See [Configuring the Bot](/configuration#api-keys).
+  </Accordion>
   <Accordion title="MEV Tip mode isn't landing my mint">
     "Bundle did not land within max_blocks" means your tip (`bundle.tip_eth`) likely wasn't competitive against other bots targeting the same block. Try increasing it, see [Mint Modes Explained](/mint-modes#e-mev-tip).
   </Accordion>

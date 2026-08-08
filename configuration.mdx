@@ -21,7 +21,7 @@ All settings live in `lumi_mint_bot_config.yaml`, created automatically next to 
 
 ## API keys
 
-<ParamField path="opensea_api_key" type="string" required>
+<ParamField path="opensea_api_key" type="string or list of strings" required>
   Your OpenSea API key, used for fetching drop and stage information, and also mint calldata. Required for OpenSea mode.
 
   <Steps>
@@ -38,6 +38,22 @@ All settings live in `lumi_mint_bot_config.yaml`, created automatically next to 
       Paste it into the `opensea_api_key` field of your settings file.
     </Step>
   </Steps>
+
+  Accepts either one key or a list of keys:
+
+  ```yaml
+  opensea_api_key: "your_key_here"
+  ```
+
+  ```yaml
+  opensea_api_key:
+    - "key_one"
+    - "key_two"
+  ```
+
+  <Tip>
+    OpenSea rate-limits by key. Multiple keys get distributed round-robin across wallets, spreading the load, helps most in Scheduled mode with many wallets. Other tools (WL Checker, Consolidate/Disperse NFT) always use just the first key.
+  </Tip>
 </ParamField>
 
 <ParamField path="explorer_api_keys.ethereum" type="string">
