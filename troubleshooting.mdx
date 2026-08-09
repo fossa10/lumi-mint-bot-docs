@@ -31,6 +31,32 @@ description: 'Common issues and what to do about them'
   <Accordion title="I edited the config but nothing changed">
     Choose **↺ Reload Config** from the main menu, or fully restart the bot.
   </Accordion>
+  <Accordion title="Windows blocks the file, or Defender flags it">
+    This is normal for a new, unsigned app, not a sign anything is wrong.
+
+    **Step 1: SmartScreen warning when opening the file**
+
+    <Frame caption="The SmartScreen warning after a fresh download">
+      <img src="/images/windows-defender-block.png" />
+    </Frame>
+
+    1. Click **More info**.
+    2. Click **Run anyway**.
+
+    **Step 2: If Windows Defender blocks or deletes the file**
+
+    Add the bot's folder to Defender's exclusion list so it's never scanned, flagged, or deleted again.
+
+    1. Open **Windows Security** (search for it in the Start menu).
+    2. Go to **Virus & threat protection**.
+    3. Under **Virus & threat protection settings**, click **Manage settings**.
+    4. Scroll down to **Exclusions**, click **Add or remove exclusions**.
+    5. Click **Add an exclusion → Folder**, and select the folder containing the bot.
+
+    <Tip>
+      Keep the bot in its own dedicated folder, not Downloads, see the [Download step](/installation#download) in Installation. Whitelisting one small folder is much safer than whitelisting your whole Downloads folder.
+    </Tip>
+  </Accordion>
   <Accordion title="macOS blocks the file, or it won't open">
     This is normal for a fresh download on a Mac, not a sign anything is wrong. Apps that aren't from the App Store need one extra step the first time.
 
