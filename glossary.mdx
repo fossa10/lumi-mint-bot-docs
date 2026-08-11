@@ -49,6 +49,9 @@ description: 'Plain-English definitions of terms used throughout these docs'
   <Accordion title="Snipe mode">
     Setting `gas.gas_limit` to `0`, which makes the bot repeatedly retry a transaction until the contract accepts it, useful when a mint's exact open time is uncertain. See [Configuring the Bot](/configuration#gas-settings).
   </Accordion>
+  <Accordion title="Spam mode">
+    Sending several copies of the same mint transaction per wallet instead of one, to improve your odds of landing it. Different from Snipe mode, which retries a single transaction until a contract accepts it. See [Mint Modes Explained](/mint-modes#spam-mode).
+  </Accordion>
   <Accordion title="SIWE (Sign-In With Ethereum)">
     A free, gasless signature used to prove wallet ownership when logging into a platform (OpenSea, Blever). It costs nothing and is not a transaction.
   </Accordion>

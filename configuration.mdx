@@ -232,6 +232,26 @@ wallet_overrides:
   #   quantity_per_wallet: 3
 ```
 
+## Spam mode
+
+Used by [Scheduled, Manual, and Gas Monitor modes](/mint-modes#spam-mode). Off by default, and blocked on Ethereum mainnet.
+
+<ParamField path="spam.spam_mode" type="boolean" default="false">
+  Turns spam mode on or off. When on, the bot sends repeated copies of the mint transaction per wallet instead of one, to improve your odds of landing it. L2 chains only, not available on Ethereum mainnet or over Telegram.
+</ParamField>
+
+<ParamField path="spam.spam_duration_sec" type="float" default="6">
+  How long to keep sending transactions per wallet, once triggered.
+</ParamField>
+
+<ParamField path="spam.spam_delay_ms" type="integer" default="100">
+  Delay between each transaction, in milliseconds.
+</ParamField>
+
+<ParamField path="spam.spam_pre_start_sec" type="integer" default="3">
+  Scheduled mode only. Seconds before the drop opens to start trying. Has no effect in Manual or Gas Monitor mode, since neither one waits for a scheduled time.
+</ParamField>
+
 ## Bundle / MEV settings
 
 Used by [MEV Tip mode](/mint-modes#e-mev-tip).

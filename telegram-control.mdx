@@ -77,6 +77,9 @@ Once minting starts, you'll get a message when it actually begins submitting, an
   <Accordion title="Custom Contract and Wallet Tools aren't available remotely">
     Both stay terminal-only for now.
   </Accordion>
+  <Accordion title="Spam mode isn't available remotely">
+    Starting a mint from Telegram always sends a single transaction per wallet, even if `spam_mode` is turned on in your config. Use the terminal for spam mode. See [Mint Modes Explained](/mint-modes#spam-mode).
+  </Accordion>
 </AccordionGroup>
 
 <Warning title="Run one bot instance per Telegram token">

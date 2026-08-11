@@ -73,3 +73,19 @@ Only available when minting on Ethereum mainnet.
 </Note>
 
 Like MEV Tip, but every wallet's mint and the tip are combined into a single transaction instead of several separate ones traveling together, using EIP-7702.
+
+## Spam Mode
+
+<Note>
+  Optional, off by default. Applies to Scheduled, Manual, and Gas Monitor modes only, not MEV Tip or Batch Tip.
+</Note>
+
+Instead of sending one transaction per wallet, the bot sends several, spaced a few milliseconds apart, to improve your odds of landing the mint if a single attempt would lose the timing race. Turn it on with `spam_mode: true`, see the `spam` settings in [Configuring the Bot](/configuration#spam-mode).
+
+<Warning>
+  L2 chains only (Arbitrum, ApeChain, Abstract, Robinhood, etc). Blocked on Ethereum mainnet, since a failed attempt still costs gas there and spam mode expects some attempts to fail.
+</Warning>
+
+<Note>
+  Terminal only. Spam mode is ignored if you start a mint from Telegram, see [Telegram Remote Control](/telegram-control#limitations).
+</Note>
