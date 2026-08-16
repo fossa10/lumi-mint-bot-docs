@@ -6,7 +6,7 @@ description: 'Using a proxy to avoid rate limits during eligibility checks'
 A proxy routes some of the bot's network requests through a different IP address instead of your own. This helps avoid rate limits when checking eligibility across many wallets at once.
 
 <Note>
-  The proxy only covers OpenSea sign-in and eligibility checks. The actual mint transaction always goes out directly, see the warning in [Configuring the Bot](/configuration#proxy).
+  The proxy covers OpenSea sign-in and eligibility checks. Mint transactions are normally sent directly for lower latency, see the note in [Configuring the Bot](/configuration#proxy).
 </Note>
 
 ## Minimum recommended setup
