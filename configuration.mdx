@@ -148,6 +148,8 @@ Only used by [Custom Contract mode](/custom-contract). See that page for the "Di
 
 <ParamField path="custom_contract.start_time" type="integer (Unix timestamp)">
   When to count down to for Scheduled and Gas Monitor modes. This is a raw Unix timestamp (seconds since 1970), not a normal date. Use a converter like [unixtimestamp.com](https://www.unixtimestamp.com/) to convert a real date/time into this format. `0` or blank means "mint immediately, no countdown." Defaults to `0`.
+
+  Not used by Watch mode, which detects the open state directly instead of counting down. See [Mint Modes Explained](/mint-modes#w-watch).
 </ParamField>
 
 ## Gas settings
