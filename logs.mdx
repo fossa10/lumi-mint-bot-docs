@@ -1,10 +1,23 @@
 ---
-title: 'Where to Find Logs'
-description: 'Log files the bot creates on every run'
+title: 'Logs Management'
+description: 'Where log files live, and how to send or delete them'
 ---
 
-Every run creates a timestamped log file (e.g. `mint_bot_20260708_140213.log`) next to the executable. These are the first thing to check yourself, or to send along if you're asking for help. They're safe to delete afterward, and safe to delete in bulk since the bot doesn't clean them up automatically.
+Every run creates a timestamped log file (e.g. `mint_bot_20260708_140213.log`) next to the executable. These are the first thing support will ask for if something goes wrong.
 
-<Warning>
-  Before sharing a log file with anyone, double check it doesn't contain a private key or license key pasted in by mistake.
-</Warning>
+Once a run ends, its log file is automatically encrypted and hidden. This keeps your activity private, only Lumi can read the contents, not even you. You don't need to find or manage these files by hand, use the **Logs Management** menu instead.
+
+## Logs Management
+
+From the [main menu](/main-menu):
+
+```
+Logs Management:
+  Send Logs
+  Delete Logs
+  ⌂  Main Menu
+```
+
+- **Send Logs**: pick one or more logs, including the one from your current session, and send them straight to Lumi for support. No need to find the file yourself.
+- **Delete Logs**: pick which encrypted logs to permanently remove from your computer. You'll only see filenames, not contents, since the files can't be opened or read.
+
