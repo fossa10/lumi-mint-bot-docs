@@ -52,7 +52,7 @@ This matters for a reason beyond convenience: your private keys and wallets neve
 
 `/mint` asks the same questions as minting from the terminal (see [Minting Guide](/minting-guide)), just over chat and in a slightly different order:
 
-1. **Platform**: OpenSea, Blever, Transient, or Scatter.
+1. **Platform**: OpenSea, Blever, Transient, Scatter, or Verse.Works.
 2. **Slug**: since you don't have your config open on your phone, you type the collection slug directly rather than it being read from `mint.slug`.
 3. **Wallets**: a checklist, tap to select, tap **Select All** / **Deselect All**, then **Done**. Leaving nothing checked when you tap Done uses every configured wallet.
 4. **Stage / phase**: same as the terminal's stage list.
@@ -61,6 +61,10 @@ This matters for a reason beyond convenience: your private keys and wallets neve
 7. **Gas settings**: mode, multiplier or manual fee, gas limit, and Flashbots Protect, each with a **Use default** option.
 8. **Mode**: Scheduled or Manual only (see [Limitations](#limitations) below).
 9. **Send to address**: only asked if `send_to_address` is relevant, same as the terminal.
+
+<Note>
+  Verse.Works skips the stage and quantity steps (4 and 5 above), since that platform has neither, and asks its own scheduling question for Scheduled mode instead. See [Verse.Works Mode](/verse-works).
+</Note>
 
 <Tip>
   Anywhere you see a **Use default** button or the words "blank/skip", you can either tap the button or type `skip` to fall back to your config value instead of typing one in.

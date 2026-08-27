@@ -88,18 +88,24 @@ Optional. See [Telegram Remote Control](/telegram-control) for full setup steps.
 
 ## Mint settings
 
-These apply to **OpenSea**, **Blever**, **Transient**, and **Scatter** modes.
+These apply to **OpenSea**, **Blever**, **Transient**, **Scatter**, and **Verse.Works** modes.
 
 <ParamField path="mint.slug" type="string" required>
   The collection's slug, the part of the drop's URL that identifies it. For example, for `opensea.io/collection/my-drop` the slug is `my-drop`, so you'd write `slug: "my-drop"`.
+
+  For Verse.Works, this can also be the full artwork or series URL, or the artwork's ID directly.
 </ParamField>
 
 <ParamField path="mint.chain" type="string" required default="ethereum">
   Which chain to mint on. Must exactly match one of the chain names you've listed under `rpcs` (e.g. `chain: "ethereum"`, `chain: "base"`, `chain: "polygon"`, `chain: "blast"`, `chain: "abstract"`).
+
+  Not used by Verse.Works, which always mints on Ethereum.
 </ParamField>
 
 <ParamField path="mint.quantity_per_wallet" type="integer" required>
   How many NFTs each selected wallet should mint. Defaults to `1`.
+
+  Not used by Verse.Works, which always mints exactly one edition per wallet.
 
   <Warning title="OpenSea's per-wallet limit is often cumulative, not per-stage">
     If your wallet is eligible for more than one OpenSea stage, for example both **GTD** (guaranteed) and **FCFS** (first come first served), check the "limit per wallet" on each stage carefully. That number is usually a running total across every stage you're eligible for, not a fresh allowance per stage.

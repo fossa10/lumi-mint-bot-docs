@@ -14,6 +14,8 @@ Wallet Tools:
   Disperse NFT
   Consolidate NFT
   Proxy Checker
+  RPC Checker
+  OS API Checker
   ⌂  Main Menu
 ```
 
@@ -40,6 +42,10 @@ Checks which of your wallets are allowlisted for a drop, without minting anythin
 
 <Note>
   Scatter's checker can only discover gated (allowlist) invite lists that at least one of your loaded wallets qualifies for. It has no way to show every list that exists ahead of time. Public lists are summarized as a single "all loaded wallets eligible" line instead of listing every wallet, since there's nothing to distinguish between them.
+</Note>
+
+<Note>
+  Verse.Works isn't available here. There's no way to check phase eligibility ahead of time on that platform, not even from the site itself. See [Verse.Works Mode](/verse-works).
 </Note>
 
 ## Check Token Balance
@@ -118,3 +124,42 @@ Benchmarks the proxies in your config against a target URL, so you can see which
 ```
 
 Proxy entries must use the `login:password@hostname:port` format from your config.
+
+## RPC Checker
+
+Benchmarks the RPC endpoints in your config, so you can see which ones are fast and reliable enough to use before a drop.
+
+1. Pick a chain (from your configured `rpcs`).
+2. Select which RPC(s) to test.
+3. The bot pings each one 10 times and reads its reported chain ID and latest block.
+4. Read the summary table, sorted fastest average first.
+
+```
+=== RPC Check Results — ethereum ===
+
+  RPC                           Success      Min       Max       Avg   Median  Chain ID     Block
+  -----------------------------  -------  -------  --------  --------  -------  --------  --------
+  ethereum-rpc.publicnode.com     10/10   45.2ms    68.9ms    52.1ms   51.0ms         ✓  21534221
+  eth.drpc.org                     9/10   88.4ms   210.3ms   120.7ms  112.5ms         ✓  21534221
+```
+
+A ✗ under Chain ID means that RPC disagrees with the others on which network it's actually serving. Worth removing it from your config.
+
+## OS API Checker
+
+Tests your configured `opensea_api_key` value(s) against OpenSea's real mint endpoint, so you know which keys are working before a drop.
+
+1. Enter a slug, or leave blank to use `mint.slug` from your config.
+2. Select which key(s) to test.
+3. The bot sends a few real test requests per key, using a placeholder wallet so nothing is actually minted.
+4. Read the summary: working keys with their response times, plus any that are broken or rate-limited.
+
+```
+=== OS API Check Results — my-drop ===
+
+  [OK] 2/3 key(s)
+    min 210ms   p25 245ms   p50 (median) 280ms   p75 310ms   max 340ms
+
+  ⚠ BROKEN:       abcd1234...ef56 — 401/403 Unauthorized
+  ⚠ RATE-LIMITED: wxyz9876...mn12 — hit 429 during test (avg 190ms)
+```

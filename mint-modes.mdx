@@ -18,7 +18,7 @@ Mode:
 ```
 
 <Note>
-  Not every mode is available on every platform. [Transient](/minting-guide#platform-differences) and [Scatter](/minting-guide#platform-differences) only offer A, B, and D. MEV Tip only appears on Ethereum. Watch only appears in [Custom Contract mode](/custom-contract).
+  Not every mode is available on every platform. [Transient](/minting-guide#platform-differences), [Scatter](/minting-guide#platform-differences), and [Verse.Works](/verse-works) only offer A, B, and D. MEV Tip only appears on Ethereum. Watch only appears in [Custom Contract mode](/custom-contract).
 </Note>
 
 <Tip>
@@ -96,6 +96,8 @@ Like MEV Tip, but every wallet's mint and the tip are combined into a single tra
 </Note>
 
 Instead of sending one transaction per wallet, the bot sends several, spaced a few milliseconds apart, to improve your odds of landing the mint if a single attempt would lose the timing race. Turn it on with `spam_mode: true`, see the `spam` settings in [Configuring the Bot](/configuration#spam-mode).
+
+Not available on Verse.Works, regardless of mode.
 
 <Warning>
   Blocked on Ethereum mainnet, since a failed attempt still costs gas there and spam mode expects some attempts to fail.

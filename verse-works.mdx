@@ -1,0 +1,45 @@
+---
+title: 'Verse.Works Mode'
+description: 'Mint from Verse.Works drops, a queue-based platform with its own eligibility model'
+---
+
+<Note>
+  Verse.Works works differently from [OpenSea, Blever, Transient, and Scatter](/minting-guide). It's not a standard first-come-first-served on-chain mint, it's queue-based. Phases can be added mid-drop, and there's no reliable way to check your eligibility for an upcoming phase ahead of time, not even from the site itself. Eligibility only becomes clear once a phase is actually live.
+</Note>
+
+From the [main menu](/main-menu), choose **Verse.Works**.
+
+<Steps>
+  <Step title="Enter the artwork">
+    Leave blank to use `mint.slug` from your config, or type a new one. Accepts a slug, a full artwork or series URL, or the artwork's ID directly.
+  </Step>
+  <Step title="Select your wallets">
+    Same wallet checklist as other platforms. See [Setting Up Your Wallets](/wallet-setup#selecting-wallets-when-minting).
+  </Step>
+  <Step title="Wait for wallet checks">
+    Each wallet signs in and the bot reports its status. Since there's no way to check eligibility for a phase that hasn't opened yet, every wallet still proceeds to the next step regardless of what it reports.
+  </Step>
+  <Step title="Confirm your price ceiling">
+    The bot shows the listing price and your configured `mint.mint_price_eth` ceiling, and asks you to confirm before continuing. If your ceiling is too low, you're asked for a real one right there instead of finding out later.
+  </Step>
+  <Step title="Choose a mint mode">
+    Only **Scheduled**, **Manual**, and **Dry run** are available, see [Mint Modes Explained](/mint-modes). No Gas Monitor, MEV Tip, or Spam Mode on this platform.
+  </Step>
+  <Step title="Scheduled mode: pick a target time">
+    Three choices:
+    - Use the listing's own known start time.
+    - Enter a custom time, in your own local time, no timezone math needed.
+    - Wait and auto-detect the next phase, useful if you don't know exactly when it opens.
+
+    <Note>
+      Waiting for a later phase you know you're eligible for, while skipping earlier ones you're not? Use a custom time with that phase's known start, not auto-detect. Auto-detect stops at the very next change, which may just be an earlier phase you don't want.
+    </Note>
+  </Step>
+</Steps>
+
+## What to expect
+
+- Quantity is always exactly one edition per wallet. `mint.quantity_per_wallet` isn't used here.
+- Always mints on Ethereum. `mint.chain` isn't used here.
+- You may see the bot briefly wait in a queue before it can attempt the purchase. This is normal for this platform.
+- Verse.Works mints asynchronously off-chain after payment. A confirmed transaction isn't the NFT itself, check the site or your wallet afterward.
