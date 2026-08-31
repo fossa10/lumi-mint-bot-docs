@@ -44,6 +44,7 @@
               "verse-works",
               "custom-contract",
               "wallet-tools",
+              "bundling-tools",
               "logs"
             ]
           },

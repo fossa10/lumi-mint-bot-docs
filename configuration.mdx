@@ -178,7 +178,7 @@ Only used by [Custom Contract mode](/custom-contract). See that page for the "Di
   Manual mode only: the "tip" paid to the block producer, in gwei. Defaults to `1.0`.
 
   <Tip>
-    Most botters set `priority_gwei` equal to `base_gwei`. On an EIP-1559 chain, the actual tip you pay is capped at whatever room is left between your max fee (`base_gwei`) and the real network base fee, so setting your priority this high just means you're always offering the full amount you're willing to pay as a tip. That maximizes how competitively your transaction is ordered against other bots during a busy mint, up to the ceiling you already set.
+    Most botters set `priority_gwei` equal to `base_gwei`. Your real tip is capped by the gap to the live network base fee, so this just offers the full amount you're willing to pay, maximizing your ordering priority up to that ceiling.
   </Tip>
 
   <Tip>
@@ -262,14 +262,22 @@ Used by [Scheduled, Manual, and Gas Monitor modes](/mint-modes#spam-mode). Off b
 
 ## Bundle / MEV settings
 
-Used by [MEV Tip mode](/mint-modes#e-mev-tip).
+Used by [MEV Tip](/mint-modes#e-mev-tip) and [Batch Tip](/mint-modes#f-batch-tip) modes.
 
 <ParamField path="bundle.tip_eth" type="float" required>
   ETH tip paid to the block builder per bundle submission. Size this against what competitor bots are likely tipping for the same drop. The default (`0.001`) is intentionally conservative and may lose every block during a competitive mint.
+
+  <Note>
+    Batch Tip mode: only does anything on Ethereum mainnet. On every other chain, the bot ignores it automatically, safe to leave set either way.
+  </Note>
 </ParamField>
 
 <ParamField path="bundle.tip_wallet" type="string">
-  Optionally, a dedicated wallet to pay the tip from instead of one of your mint wallets, written as `tip_wallet: "label"` or `tip_wallet: "label,0xprivatekey"`. Leave `""` to use the first eligible mint wallet.
+  A dedicated wallet that funds and triggers the bundle, instead of one of your mint wallets, written as `tip_wallet: "label"` or `tip_wallet: "label,0xprivatekey"`. Leave `""` to use the first eligible mint wallet.
+
+  <Note>
+    Batch Tip mode: this wallet must be the owner of that chain's contract from [Bundling Tools](/bundling-tools), or a wallet you've added there. Otherwise the mint is rejected before anything is sent.
+  </Note>
 </ParamField>
 
 <ParamField path="bundle.gas_limit" type="integer">
@@ -278,6 +286,10 @@ Used by [MEV Tip mode](/mint-modes#e-mev-tip).
 
 <ParamField path="bundle.max_blocks" type="integer" required>
   How many blocks in a row to keep resubmitting the bundle if it doesn't land. Defaults to `5`.
+
+  <Note>
+    Batch Tip mode: only applies when minting on Ethereum. On every other chain, the bot sends once with no retry.
+  </Note>
 </ParamField>
 
 ## RPC endpoints

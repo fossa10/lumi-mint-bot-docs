@@ -87,5 +87,5 @@ Once minting starts, you'll get a message when it actually begins submitting, an
 </AccordionGroup>
 
 <Warning title="Run one bot instance per Telegram token">
-  Telegram only allows one running bot process to listen for a given token at a time. If you run two copies of the bot (for example, two different drops at once) with the **same** `telegram_bot_token` in both configs, they'll conflict: commands may silently go to the wrong instance, or stop arriving at all. If you run multiple instances at the same time, create a separate Telegram bot (a new token from @BotFather) for each one.
+  Telegram only allows one running process per token. Two instances sharing the same `telegram_bot_token` will conflict, commands may go to the wrong one or stop arriving. Running multiple instances? Give each its own token from @BotFather.
 </Warning>

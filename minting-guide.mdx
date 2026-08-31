@@ -33,7 +33,7 @@ OpenSea, Blever, Transient, and Scatter all follow the same basic flow. This pag
     The bot signs into the platform with each selected wallet (a free, gasless "Sign-In With Ethereum" signature, not a transaction) and checks each wallet's remaining allowance for the stage you picked. If a wallet isn't eligible for an allowlist stage, it's excluded automatically.
 
     <Note>
-      Your `mint.quantity_per_wallet` (or a per-wallet override) is a request, not a guarantee. If the stage's own per-wallet limit is lower than what you configured, the bot automatically caps your quantity down to match, and prints a warning when it does. If a wallet already minted some units earlier, the bot also subtracts those from what it will try to mint this time, so you never accidentally attempt more than a wallet is actually allowed. This check runs again right before the stage opens, in case the project changes the limit at the last minute.
+      `mint.quantity_per_wallet` is a request, not a guarantee. The bot caps it to the stage's real limit, subtracts what a wallet already minted, and rechecks right before the stage opens.
     </Note>
   </Step>
   <Step title="Choose a mint mode">
@@ -83,5 +83,5 @@ OpenSea, Blever, Transient, and Scatter all follow the same basic flow. This pag
 If you set `discord_webhook_url` in your config, a summary is posted to your Discord webhook automatically. Otherwise, results print directly in the terminal: one line per wallet showing the transaction hash and whether it confirmed or reverted.
 
 <Warning>
-  With Flashbots Protect on, the bot only waits 40 seconds for your transaction to land before it logs `FAILED`. That log line can mean the transaction genuinely failed, or it can just mean it hadn't been mined yet when the bot stopped waiting. If you see `FAILED` while using Flashbots Protect, check the transaction on a block explorer before assuming it didn't go through. It may still get mined after the 40-second mark.
+  With Flashbots Protect on, `FAILED` after 40 seconds doesn't always mean it failed, it may just still be pending. Check a block explorer before assuming it didn't land.
 </Warning>

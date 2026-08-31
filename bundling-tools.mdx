@@ -1,0 +1,102 @@
+---
+title: 'Bundling Tools'
+description: 'Mint from many wallets in a single transaction'
+---
+
+<Warning title="Advanced feature">
+  If terms like "delegate," "owner," "caller," or "factory" aren't familiar, use the regular mint modes instead. Mistakes here involve real funds.
+</Warning>
+
+**Bundling Tools** (from the [main menu](/main-menu)) lets you mint from a whole group of wallets using one single transaction, instead of one transaction per wallet.
+
+```
+Bundling Tools:
+  Deploy Mint Delegate Contract
+  Add Caller
+  Remove Caller
+  Delegate Wallets
+  Check Delegation Status
+  Revoke Delegation
+  Factory Balance / Withdraw
+  ⌂  Main Menu
+```
+
+This works together with **Batch Tip** mode, see [Mint Modes Explained](/mint-modes#f-batch-tip). Bundling Tools is the one-time setup, Batch Tip is what you actually run to mint.
+
+<Note>
+  OpenSea only, for now.
+</Note>
+
+## Quick start
+
+<Steps>
+  <Step title="Deploy a contract">
+    Bundling Tools → **Deploy Mint Delegate Contract**. Pick which wallet should own it, and which chain. Do this once per chain.
+  </Step>
+  <Step title="Delegate your minting wallets">
+    Bundling Tools → **Delegate Wallets**. Pick the wallets you want to mint with. Do this once per wallet, it doesn't need to be repeated for every mint.
+  </Step>
+  <Step title="Mint using Batch Tip mode">
+    Start a mint like normal, and pick **F - Batch Tip** from the mode menu. See [Mint Modes Explained](/mint-modes#f-batch-tip).
+  </Step>
+</Steps>
+
+That's it. Everything below is optional, for more control.
+
+## Deploy Mint Delegate Contract
+
+Sets up the contract that makes bundled minting possible, one per chain.
+
+1. Pick a chain.
+2. Pick an owner wallet. This wallet controls the contract and pays for it to be deployed.
+
+You only need to do this once per chain. If you already deployed one, you'll be asked to confirm before deploying a new one.
+
+<Warning>
+  Deploying creates `bundling_deploys.yaml` next to the bot. Back this file up.
+</Warning>
+
+## Delegate Wallets
+
+Prepares wallets to mint together. This is a one-time step per wallet, it stays in effect until you revoke it.
+
+1. Pick the chain.
+2. Check off which wallets to delegate. These are the wallets that will actually mint.
+
+The bot skips wallets that are already delegated.
+
+<Note>
+  While a wallet is delegated, some NFTs it holds may not be movable yet, see [While a wallet is delegated](#while-a-wallet-is-delegated) below.
+</Note>
+
+## While a wallet is delegated
+
+Some NFT collections, mainly ones with enforced creator royalties, block transfers from any wallet that looks like a smart contract instead of a normal wallet. A delegated wallet temporarily looks like a smart contract to those collections, even though it's still fully yours and you still hold the private key.
+
+In practice, this means an NFT from one of those collections can get stuck in a delegated wallet, unmovable, including through [Consolidate NFT](/wallet-tools#consolidate-nft), until you revoke delegation for that wallet.
+
+<Tip>
+  Planning to move NFTs out of a wallet right after minting? Revoke delegation for it first (Bundling Tools → **Revoke Delegation**), then consolidate as normal.
+</Tip>
+
+## Check Delegation Status
+
+Shows which of your wallets are currently delegated, so you can confirm before a mint instead of guessing.
+
+## Revoke Delegation
+
+Undoes delegation for wallets you select. The bot only revokes wallets that are actually delegated, and tells you if any weren't.
+
+## Add Caller / Remove Caller
+
+By default, only the owner wallet from step 1 can trigger a Batch Tip mint. If you'd rather use a different wallet for that (for example, to keep your owner wallet untouched day to day), add it here.
+
+<Warning>
+  Only add a wallet you fully trust. It gets full control over minting for every wallet you've delegated on that chain.
+</Warning>
+
+If you do this, set `bundle.tip_wallet` in your config to that wallet. See [Configuring the Bot](/configuration#bundle--mev-settings).
+
+## Factory Balance / Withdraw
+
+Shows the contract's balance on a chain, and lets you pull out any leftover funds. Most of the time this will be empty since funds pass through Batch Tip mode rather than sitting in the contract.
