@@ -79,6 +79,8 @@ Once set up, pick **F - Batch Tip** here like any other mode.
 
 One wallet (`bundle.tip_wallet`) funds the entire batch, every wallet's mint cost plus the tip. Make sure it's funded before you start. See `bundle.tip_wallet` in [Configuring the Bot](/configuration#bundle--mev-settings).
 
+Gas scales with how many wallets are in the batch, a large batch can cost a lot of real ETH in gas alone, on top of the mint price. See `bundle.gas_limit` in [Configuring the Bot](/configuration#bundle--mev-settings).
+
 The coinbase tip (`bundle.tip_eth`) only does anything on Ethereum mainnet. On every other chain, the bot ignores it automatically, no need to change your config when switching chains.
 
 <Note>
@@ -87,7 +89,7 @@ The coinbase tip (`bundle.tip_eth`) only does anything on Ethereum mainnet. On e
 
 ## Spam Mode
 
-Optional, off by default. Applies to Scheduled, Manual, Gas Monitor, and Watch modes only, not MEV Tip or Batch Tip.
+Optional, off by default. Applies to Scheduled, Manual, Gas Monitor, Watch, and Batch Tip (public sale stages only, which is the only kind Batch Tip runs on anyway). Not available for MEV Tip.
 
 Instead of sending one transaction per wallet, the bot sends several, spaced a few milliseconds apart, to improve your odds of landing the mint if a single attempt would lose the timing race. Turn it on with `spam_mode: true`, see the `spam` settings in [Configuring the Bot](/configuration#spam-mode).
 

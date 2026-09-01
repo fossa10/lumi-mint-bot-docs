@@ -282,6 +282,10 @@ Used by [MEV Tip](/mint-modes#e-mev-tip) and [Batch Tip](/mint-modes#f-batch-tip
 
 <ParamField path="bundle.gas_limit" type="integer">
   Manual gas limit for the bundle's mint transactions. `0` = auto-estimate. Defaults to `0`.
+
+  <Note>
+    Batch Tip mode: total gas scales with how many wallets are in the batch, but less than linearly, a batch is cheaper per wallet than separate mints would be. For example, `200000` with 10 wallets adds up to roughly 740,000 total, real ETH spent on gas, on top of the mint price.
+  </Note>
 </ParamField>
 
 <ParamField path="bundle.max_blocks" type="integer" required>

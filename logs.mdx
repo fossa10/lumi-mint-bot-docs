@@ -1,6 +1,6 @@
 ---
 title: 'Logs Management'
-description: 'How to view, send, or delete your session logs'
+description: 'How to view, send, delete, or analyze your session logs'
 ---
 
 Every run creates a session log. These are the first thing support will ask for if something goes wrong.
@@ -16,10 +16,39 @@ Logs Management:
   Send Logs
   Delete Logs
   Read Log
+  Analyze Log
   ⌂  Main Menu
 ```
 
 - **Send Logs**: pick one or more sessions, including your current one, and send them straight to Lumi for support. They're encrypted the moment they're sent, only Lumi can read them.
 - **Delete Logs**: pick which sessions to permanently remove from your computer. This can't be undone.
 - **Read Log**: pick a session and view it yourself. It opens in Notepad (Windows) or TextEdit (Mac), and the bot waits for you to close it before you can do anything else.
+- **Analyze Log**: pick a session and get a per-wallet report of what happened during a mint. See below.
+
+## Analyze Log
+
+Turns a session log into a readable report: how fast each wallet went from mint open to broadcast, which RPC won, and why any wallet failed or never got included.
+
+1. Pick a session.
+2. If that session covers more than one drop, pick which one.
+3. Read the report.
+
+```
+=== Mint Report — drop 1/1 ===
+Mint opens (T-0): 2026-08-30 08:00:00 AM Pacific Daylight Time
+Collection: my-drop
+
+  Rank  Wallet    Bot→OpenSea(Δ)  OS Response(Δ)  TX Submitted(Δ)  RPC Done(Δ)   Total  Receipt(Δ)  Receipt  Winning RPC
+  ----  --------  --------------  --------------  ---------------  -----------  ------  ----------  -------  -----------
+  1     wallet_1            +1ms          +203ms             +9ms       +113ms  3152ms      +930ms  OK       alchemy (home)
+  2     wallet_2            +5ms          +332ms            +16ms       +190ms  3543ms      +777ms  OK       drpc.live (home)
+
+Fastest: wallet_1 (3152ms)   Slowest: wallet_2 (3543ms)   Average: 3347ms
+```
+
+Below the table, it also explains in plain language anything worth knowing, like why a wallet never attempted, or why a transaction reverted.
+
+<Tip>
+  Try this before opening a support ticket, it often answers "what happened" on its own.
+</Tip>
 
