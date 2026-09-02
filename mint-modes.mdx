@@ -84,12 +84,12 @@ Gas scales with how many wallets are in the batch, a large batch can cost a lot 
 The coinbase tip (`bundle.tip_eth`) only does anything on Ethereum mainnet. On every other chain, the bot ignores it automatically, no need to change your config when switching chains.
 
 <Note>
-  OpenSea only. Only appears in the mode menu for a chain where you've completed the [Bundling Tools](/bundling-tools) setup, and only for public sale stages.
+  OpenSea and Custom Contract only. Only appears in the mode menu for a chain where you've completed the [Bundling Tools](/bundling-tools) setup. On OpenSea, only for public phase. On Custom Contract, not available when using per-wallet parameters.
 </Note>
 
 ## Spam Mode
 
-Optional, off by default. Applies to Scheduled, Manual, Gas Monitor, Watch, and Batch Tip (public sale stages only, which is the only kind Batch Tip runs on anyway). Not available for MEV Tip.
+Optional, off by default. Applies to Scheduled, Manual, Gas Monitor, Watch, and Batch Tip. Not available for MEV Tip.
 
 Instead of sending one transaction per wallet, the bot sends several, spaced a few milliseconds apart, to improve your odds of landing the mint if a single attempt would lose the timing race. Turn it on with `spam_mode: true`, see the `spam` settings in [Configuring the Bot](/configuration#spam-mode).
 
