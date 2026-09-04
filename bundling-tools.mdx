@@ -13,6 +13,7 @@ description: 'Mint from many wallets in a single transaction'
 Bundling Tools:
   Deploy Mint Delegate Contract
   Add Caller
+  Check Caller Status
   Remove Caller
   Delegate Wallets
   Check Delegation Status
@@ -82,6 +83,10 @@ In practice, this means an NFT from one of those collections can get stuck in a 
 ## Check Delegation Status
 
 Shows which of your wallets are currently delegated, so you can confirm before a mint instead of guessing.
+
+## Check Caller Status
+
+Shows which of your wallets can currently act as `bundle.tip_wallet` — the owner from step 2, or a wallet added via **Add Caller**.
 
 ## Revoke Delegation
 
